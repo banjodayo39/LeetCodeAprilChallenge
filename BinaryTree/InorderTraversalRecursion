@@ -1,0 +1,26 @@
+class Solution {
+    func inorderTraversal(_ root: TreeNode?) -> [Int] {
+        var paths = [Int]()
+
+        guard let node = root else{
+            return []
+        }
+        
+        appendNode(node, &paths)
+        
+        return paths
+    }
+    
+    func appendNode(_ root : TreeNode?, _ treeList : inout [Int]){
+        
+        guard let root = root else{
+            return
+        }
+            
+        appendNode(root.left, &treeList)
+        
+         treeList.append(root.val)
+        
+        appendNode(root.right, &treeList)
+    }
+}
