@@ -1,0 +1,13 @@
+class Solution {
+    func deleteNode(_ node: ListNode?) {
+        
+        guard var currNode = node else{
+            return
+        }
+      
+       currNode.val = currNode.next!.val
+       currNode.next = currNode.next?.next 
+        
+        
+    }
+}
