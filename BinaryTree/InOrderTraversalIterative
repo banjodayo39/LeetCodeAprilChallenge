@@ -1,0 +1,49 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init() { self.val = 0; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+ *         self.val = val
+ *         self.left = left
+ *         self.right = right
+ *     }
+ * }
+ */
+class Solution {
+    func inorderTraversal(_ root: TreeNode?) -> [Int] {
+        
+        var paths = [Int]()
+        var stack = [TreeNode]()
+        
+        guard let node = root else{
+            return []
+        }
+        
+        var current : TreeNode? = node
+        
+        while(current != nil || !stack.isEmpty){
+            while(current != nil){
+                if let curr = current{
+                   stack.append(curr)
+                }
+                 current = current?.left 
+                 
+                 
+            }
+            
+            current = stack.removeLast()
+            if let val = current?.val{
+                paths.append(val)
+            }
+            
+            current = current?.right
+        }
+        
+        return paths
+    }
+    
+}
