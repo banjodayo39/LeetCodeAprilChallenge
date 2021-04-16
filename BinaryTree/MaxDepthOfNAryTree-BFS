@@ -1,0 +1,44 @@
+/**
+ * Definition for a Node.
+ * public class Node {
+ *     public var val: Int
+ *     public var children: [Node]
+ *     public init(_ val: Int) {
+ *         self.val = val
+ *         self.children = []
+ *     }
+ * }
+ */
+
+class Solution {
+    func maxDepth(_ root: Node?) -> Int {
+        guard var node = root else{
+            return 0
+        }
+        
+        var  queue = [Node]()
+        queue.append(node)
+        
+        var depth = 0
+        
+        while(!queue.isEmpty){
+            var size = queue.count
+            
+            if size > 0{
+               for i in 0...size - 1{
+                    var node = queue.removeFirst()
+                   
+                    for childNode in node.children{
+                        queue.append(childNode)
+                    }
+                } 
+            }
+            
+            
+            depth += 1
+        }
+        
+        return depth
+        
+    }
+}
