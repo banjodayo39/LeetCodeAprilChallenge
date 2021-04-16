@@ -1,0 +1,26 @@
+class Solution {
+    func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
+       
+        var newHead = head
+        
+        // if node is first node
+        while(newHead != nil && newHead?.val == val){
+            newHead = newHead?.next
+        }
+        
+        
+        guard var current = newHead else {
+            return newHead
+        }
+        
+        while( current != nil && current.next != nil){
+            if(current.next!.val == val){
+                current.next = current.next!.next
+            } else{
+                current = current.next!
+            }
+        }
+        
+        return newHead
+    }
+}
