@@ -1,0 +1,78 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init() { self.val = 0; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+ *         self.val = val
+ *         self.left = left
+ *         self.right = right
+ *     }
+ * }
+ */
+class Solution {
+    func deleteNode(_ root: TreeNode?, _ key: Int) -> TreeNode? {
+        guard var node = root  else {
+            return nil
+        }
+        
+     if key < node.val{
+            node.left = deleteNode(node.left, key)
+        } else if key > node.val{
+            node.right = deleteNode(node.right, key)
+        }
+        else {
+            if node.left == nil && node.right == nil{
+                 return nil
+            }
+            
+            // if node.left == nil { 
+            //     return node.right
+            // }
+            // if node.right == nil { 
+            //     return node.left
+            // }
+            
+
+
+            else if(node.left != nil){
+                var node_ = node
+                node.val = inOrderPrecedessor(&node_)
+                node.left = deleteNode(node.left, node.val)
+            } else {
+                var node_ = node
+
+                node.val = inOrderSuccesessor(&node_)
+                node.right = deleteNode(node.right, node.val)
+            }
+            
+            
+        } 
+        return node
+    }
+    
+
+    
+     func inOrderSuccesessor(_ root : inout TreeNode) -> Int{
+         root = root.right!
+
+        while(root.left != nil){
+            root = root.left!
+        }
+        
+        return root.val
+    }
+    
+     func inOrderPrecedessor(_ root : inout TreeNode) -> Int{
+        root = root.left!
+
+        while(root.right != nil){
+            root = root.right!
+        }
+        
+        return root.val
+    }
+}
