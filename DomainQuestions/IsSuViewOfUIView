@@ -1,0 +1,50 @@
+
+var view1 = UIView()
+var view2 = UIView()
+var view3 = UIView()
+var view4 = UIView()
+
+view2.addSubview(view3)
+view1.addSubview(view2)
+
+func viewContainsTarget(_ view1 : UIView, _ targetView : UIView ) -> Bool{
+    if view1.subviews.count == 0{
+           return view1 == targetView
+    }
+    
+    if(view1.subviews.count > 0){
+        for i in 0...view1.subviews.count - 1{
+            if(view1.subviews[i] == targetView){
+                return true
+            }
+            if(viewContainsTarget(view1.subviews[i], targetView)){
+                return true
+            }
+        }
+    }
+    
+    return false
+}
+
+func viewContainsSubView(_ view1 : UIView, _ targetView : UIView ) -> UIView?{
+    if view1.subviews.count == 0{
+        if(view1 == targetView){
+            return targetView.superview
+        }
+    }
+    
+    if(view1.subviews.count > 0){
+        for i in 0...view1.subviews.count - 1{
+            if(view1.subviews[i] == targetView){
+                return targetView.superview
+            }
+            if(viewContainsSubView(view1.subviews[i], targetView) != nil){
+                return targetView
+            }
+        }
+    }
+    
+    return nil
+}
+
+print(viewContainsSubView(view1, view2))
