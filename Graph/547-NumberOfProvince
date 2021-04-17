@@ -1,0 +1,30 @@
+class Solution {
+    
+    var visited = Set<Int>()
+
+    func findCircleNum(_ isConnected: [[Int]]) -> Int {
+        
+        var numOfProvince = 0
+        
+        for connect in 0...isConnected.count - 1{
+            if !visited.contains(connect){
+                numOfProvince += 1
+                dfs(connect, isConnected, numOfProvince)
+            }
+            
+        }
+        
+        return numOfProvince
+    }
+    
+    func dfs(_ connect : Int, _ isConnected: [[Int]], _ numOfProvince : Int){
+        
+        visited.insert(connect)
+        
+        for city in 0...isConnected[connect].count - 1{
+            if isConnected[connect][city] == 1 && !visited.contains(city){
+                dfs(city, isConnected, numOfProvince)
+            }
+        }
+    }
+}
