@@ -1,0 +1,47 @@
+func mergeSort(_ arr : inout [Int]) -> [Int]{
+    
+    if arr.count - 1 > 1{
+        let mid = (arr.count)/2
+        
+        var l = Array(arr[0..<mid])
+        print(l)
+        var r = Array(arr[mid..<arr.count])
+        print(r)
+
+        mergeSort(&l)
+        mergeSort(&r)
+        
+        var i = 0
+        var j = 0
+        var k = 0
+        
+        while( i < l.count - 1 && j < arr.count - 1){
+            if l[i] < r[j]{
+                arr[k] = l[i]
+                i += 1
+            } else {
+                arr[k] = r[j]
+                j += 1
+            }
+            k += 1
+        }
+        
+        
+        while i < l.count - 1 {
+            arr[k] = l[i]
+            i += 1
+            k += 1
+        }
+        
+        while j < r.count - 1{
+            arr[k] = r[j]
+            j += 1
+            k += 1
+        }
+        
+    }
+    
+    return arr
+}
+
+print(mergeSort(&d))
