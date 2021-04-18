@@ -1,0 +1,40 @@
+class Solution {
+    
+    var conncetionMap = [Int : [Int]]()
+    var visited = Set<Int>()
+    
+    func findRedundantConnection(_ edges: [[Int]]) -> [Int] {
+        
+        var parent = [Int](repeating : 0, count : edges.count + 1)
+        
+        for edge in edges{
+            
+            var u = edge[0]
+            var v = edge[1]
+            
+            var pu = findP(u, &parent)
+            var pv = findP(v, &parent)
+            
+            if pu == pv {
+                return edge
+            }
+            
+            parent[pv] = pu
+            
+        }
+        
+        return [0, 0]
+    }
+    
+    func findP(_ v : Int, _ parent : inout [Int]) -> Int{
+        
+        if(parent[v] == 0){
+            parent[v] = v
+        } 
+        
+        if parent[v] != v{
+            parent[v] = findP(parent[v], &parent)
+        }
+        return parent[v]
+    }
+}
