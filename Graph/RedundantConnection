@@ -1,7 +1,6 @@
 class Solution {
     
-    var conncetionMap = [Int : [Int]]()
-    var visited = Set<Int>()
+   
     
     func findRedundantConnection(_ edges: [[Int]]) -> [Int] {
         
