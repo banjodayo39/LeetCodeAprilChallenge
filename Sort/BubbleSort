@@ -1,0 +1,19 @@
+func bubbleSort(_ arr : inout [Int]) -> [Int]{
+    
+    guard arr.count  >= 2 else{
+        return arr
+    }
+    for i in 1...arr.count - 1{
+
+        for j in 0...(arr.count - 1 - i) {
+            print(arr)
+            if arr[j] > arr[j+1]{
+                (arr[j], arr[j+1]) = (arr[j+1], arr[j])
+            }
+            
+        
+        } 
+    }
+    
+    return arr
+}
