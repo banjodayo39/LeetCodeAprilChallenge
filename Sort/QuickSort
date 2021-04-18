@@ -1,0 +1,45 @@
+func partition( _ arr : inout [Int], _ l : Int, _ r : Int) -> Int{
+    let pivot = arr[l]
+    var start = l 
+    var end = r 
+    
+    while(start < end){
+        
+        while(arr[start] <= pivot && start < end){
+            start  += 1
+        }
+        
+        while(arr[end] > pivot){
+            end -= 1
+        }
+        
+        if start  < end{
+            (arr[start], arr[end]) = (arr[end], arr[start])
+        }
+        
+        arr[l] = arr[end]
+        arr[end] = pivot
+    }
+    return end
+
+}
+
+func quickSort(_ arr : inout [Int], _ left : Int, _ right : Int) -> [Int]{
+    
+    guard arr.count  >= 2 else{
+        return arr
+    }
+    
+    if (left < right){
+        let q  = partition(&arr, left, right)
+        quickSort(&arr, left, q-1)
+        quickSort(&arr, q+1, right)
+        print(q)
+
+    }
+        
+    return arr
+}
+
+
+print(quickSort(&d, 0, 1))
