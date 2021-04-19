@@ -1,0 +1,148 @@
+class PriorityQueue{
+    
+    private var queue : [Int]
+    
+    public init(){
+        self.queue = [Int]()
+    }
+    
+    public var size : Int{
+        return queue.count
+    }
+    
+    func leftChild(_ parentIndex : Int) -> Int {
+        return queue[((2 * parentIndex) + 1)]
+    }
+    
+    func  rightChild(_ parentIndex : Int) -> Int {
+        return queue[((2 * parentIndex) + 2)]
+    }
+    
+    func parent(_ childIndex : Int) -> Int {
+        return queue[(childIndex - 1) / 2]
+    }
+    
+    @discardableResult
+    func add(_ item : Int) -> Bool{
+        self.queue.append(item)
+        //self.heapifyUp(from: self.queue.count - 1)
+        self.siftUp(self.queue.count - 1)
+        return true
+    }
+    
+    private func popAndHeapifyDown() -> Int {
+        let firstItem = self.queue[0]
+        
+        if self.queue.count == 1 {
+            self.queue.removeLast()
+            return firstItem
+        }
+        
+        self.queue[0] = self.queue.removeLast()
+        
+        self.heapifyDown()
+        
+        return firstItem
+    }
+    
+    func heapify(_ arr : inout [Int], _ n : Int, _ i : Int){
+        
+        var largest = i
+        let l = (2 * i) + 1
+        let r = (2 * i) + 2
+        
+        
+        if l < n && arr[largest] < arr[l]{
+            largest = l
+            
+        }
+        
+        
+        
+        if r < n && arr[largest] < arr[r]{
+            largest = r
+            
+        }
+        
+        if largest != i{
+            (arr[i] , arr[largest]) = (arr[largest], arr[i])
+            heapify(&arr, n, largest)
+        }
+    }
+    
+    
+    /**
+     Time complexity : O(n)   
+     Restores the min heap order of the queue by moving the root item towards the end of the queue.
+     */
+    private func heapifyDown() {
+       var parent = 0
+        
+        while true {
+            let leftChild = 2 * parent + 1
+            if leftChild >= self.queue.count {
+                break
+            }
+            
+            let rightChild =  2 * parent  + 1
+            var minChild = leftChild
+            if rightChild < self.queue.count && self.queue[minChild] > self.queue[rightChild] {
+                minChild = rightChild
+            }
+            
+            if self.queue[parent] > self.queue[minChild] {
+                (self.queue[parent], self.queue[minChild]) = (self.queue[minChild], self.queue[parent])
+                parent = minChild
+            } else {
+                break
+            }
+        }
+    }
+    
+    private func siftUp(_ index: Int) -> Bool {
+        if index == 0 {
+            return false
+        }
+        let parent = (index - 1) >> 1
+        if queue[index] < queue[parent] {
+            (queue[index], queue[parent]) = (queue[parent], queue[index])
+            siftUp(parent)
+            return true
+        }
+        return false
+    }
+    
+    private func heapifyUp(from index: Int) {
+        var child = index
+        var parent = (child - 1)/2
+        while parent >= 0 && self.queue[parent] > self.queue[child] {
+           // print("The value of \(self.queue)")
+            (self.queue[parent], self.queue[child]) = (self.queue[child], self.queue[parent])
+            child = parent
+            parent = (child - 1)/2
+           // print("the child \(child) the parent\(parent)")
+        }
+        
+    }
+    
+    @discardableResult
+    public func remove() throws -> Int {
+        guard self.queue.count > 0 else {
+            throw QueueError.noSuchItem("Attempt to remove item from an empty queue.")
+        }
+        return self.popAndHeapifyDown()
+    }
+    
+    
+    
+}
+
+extension PriorityQueue: CustomStringConvertible {
+    public var description: String {
+        return self.queue.description
+    }
+}
+
+enum QueueError: Error {
+    case noSuchItem(String)
+}
