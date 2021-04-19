@@ -1,0 +1,59 @@
+func numberOfComponent(_ gb : inout [[Int]]) -> Int{
+    
+    var stack = [Int]()
+    var gDict = [Int : [Int]]()
+    
+    var count = 0
+    var visited = Set<Int>()
+    
+    for edge in gb{
+        
+        if gDict.keys.contains(edge[0]){
+            gDict[edge[0]]!.append(edge[1])
+        } else{
+            gDict[edge[0]] = [edge[1]]
+        }
+        
+        if gDict.keys.contains(edge[1]){
+            gDict[edge[1]]!.append(edge[0])
+        } else{
+            gDict[edge[1]] = [edge[0]]
+        }
+    }
+    
+    for edge in gb{
+        
+        let u = edge[0]
+        let v = edge[1]
+        
+        if (!visited.contains(u)){
+            dfs(u, &visited, gDict)
+            count += 1
+        }
+    }
+    
+    return count
+}
+
+
+func dfs(_ index : Int, _ visited : inout Set<Int>, _ gDict : [Int : [Int]]){
+    
+   var stack = [Int]()
+    
+    stack.append(index)
+    
+    while !stack.isEmpty{
+        
+        let top = stack.removeLast()
+                
+        for i in gDict[top]!{
+            if !visited.contains(i){
+                visited.insert(i)
+                stack.append(i)
+            }
+        }
+    }
+}
+
+
+
