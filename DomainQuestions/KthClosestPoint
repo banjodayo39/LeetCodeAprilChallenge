@@ -1,0 +1,19 @@
+/* Using the euclidean distance we can calculate the difference between two functions
+*/
+
+func getEuclideanDistance(_ x : Int, _ y: Int) -> Double {
+    return  sqrt(pow(Double(x), 2) + pow(Double(y), 2))
+}
+
+var points = [[3, 3], [5, -1], [-2, 4]]
+
+func kClosetPoint(_ p : inout [[Int]], _ k : Int) -> [[Int]]{
+    let m = p.sorted{
+         getEuclideanDistance($0[0], $0[1]) < getEuclideanDistance($1[0],  $1[1])
+
+    }
+    return Array(m[..<k])
+}
+
+let m = kClosetPoint(&points, 2)
+print(m)
