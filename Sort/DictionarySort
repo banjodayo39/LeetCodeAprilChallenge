@@ -9,3 +9,10 @@ let dictionary = [
 let sortedKeys = (dictionary.keys).sorted(by: <) // ["A", "D", "Z"]
 
 //Sort Dictionary by Values in ascending order 
+let dictionary = [
+    "A" : 1,
+    "Z" : 2,
+    "D" : 5
+]
+
+let sortedByValueDictionary2 = dictionary.sorted { $0 < $1 }
