@@ -1,0 +1,55 @@
+
+// this is an optimal solution with O(n) space complexity  and  worst case O(n)
+class Solution {
+ 
+    func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
+        
+        var arr = [Int](repeating: 0, count: 2)
+
+         
+        dfs(root, &arr, k)
+        return arr[1]
+       
+    }
+    
+    func dfs(_ root: TreeNode?, _ arr : inout [Int], _ k : Int){
+        if root == nil{
+            return
+        }
+        
+        dfs(root?.left, &arr, k)
+        if(root != nil){
+            arr[0] += 1
+            if (arr[0] == k){
+                arr[1] = root!.val
+                return
+            }
+        }
+        dfs(root?.right, &arr, k)
+    }
+    
+}
+
+
+class Solution1 {
+    var arr = [Int]()
+ 
+    func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
+        dfs(root)
+        return arr[k-1]
+       
+    }
+    
+    func dfs(_ root: TreeNode?){
+        if root == nil{
+            return
+        }
+        
+        dfs(root?.left)
+        if(root != nil){
+            arr.append(root!.val)
+        }
+        dfs(root?.right)
+    }
+    
+}
