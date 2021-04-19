@@ -1,0 +1,11 @@
+//Sort Dictionary by Keys in ascending order 
+
+let dictionary = [
+    "A" : [1, 2],
+    "Z" : [3, 4],
+    "D" : [5, 6]
+]
+
+let sortedKeys = (dictionary.keys).sorted(by: <) // ["A", "D", "Z"]
+
+//Sort Dictionary by Values in ascending order 
