@@ -62,3 +62,30 @@ bQueue.async(group: group){
 group.notify(queue: bQueue){
     print("All task done")
 }
+
+
+class SearchResultLoader{
+    private let debounceInterval : TimeInterval
+    private var pendingRequestWorkItem : DispatchWorkItem?
+    
+    init(_ interval : TimeInterval){
+        self.debounceInterval = interval
+        self.pendingRequestWorkItem = nil
+    }
+    
+    func performSearch(for query : String){
+        pendingRequestWorkItem?.cancel()
+        
+        let requestWorkItem = DispatchWorkItem{
+            //perform the request 
+        }
+        
+        pendingRequestWorkItem = requestWorkItem
+        
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + debounceInterval,
+            execute :requestWorkItem )
+        
+        
+    }
+}
