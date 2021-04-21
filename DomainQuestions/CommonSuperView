@@ -1,0 +1,55 @@
+extension UIView{
+    
+    
+    func addSubViews(_ views : UIView...){
+        for view in views{
+            self.addSubview(view)
+        }
+    }
+    
+}
+
+var view1 = UIView()
+var view2 = UIView()
+var view3 = UIView()
+var view4 = UIView()
+var view5 = UIView()
+
+
+
+view1.tag = 1
+view2.tag = 2
+view3.tag = 3
+view4.tag = 4
+
+
+view1.addSubViews(view2, view3)
+view2.addSubview(view4)
+view3.addSubview(view5)
+
+func commonSuperView(_ view1: UIView, _ view2 : UIView) -> Bool{
+    var superViews = Set<UIView>()
+    var currView : UIView? = view1
+    
+    while( currView != nil){
+        superViews.insert(currView!)
+        currView = currView?.superview
+    }
+    
+    currView = view2
+    
+    while(currView != nil){
+        if(superViews.contains(currView!)){
+            print(currView!.tag)
+            return true
+        }
+        currView = currView?.superview
+    }
+    
+    
+    return false
+}
+
+let m = commonSuperView(view4, view5)
+print(m)
+
