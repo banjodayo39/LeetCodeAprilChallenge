@@ -1,0 +1,65 @@
+import UIKit
+
+class Node {
+    var value : Int
+    var next : Node?
+    
+    init(_ val : Int){
+        self.value  = val
+        self.next = nil
+    }
+}
+
+class Queue {
+    
+    var head : Node?
+    var tail : Node?
+    var count = 0
+    
+    init(){
+        head = nil
+        tail = nil
+    }
+    
+    var isEmpty : Bool{
+        return head == nil
+    }
+    
+    func peek() -> Int?{
+        if let node = head{
+            return node.value
+        }
+        return nil
+    }
+    
+    func enqueue(_ val : Int){
+        let node = Node(val)
+        if head == nil{
+            head = node
+            tail = head
+        } else{
+            tail?.next = node
+            tail = node
+        }
+        count += 1
+    }
+    
+    func dequeue() -> Int?{
+        if let node = head{
+            let temp = node.value
+            head = node.next
+            
+            if head == nil{
+                tail = nil
+            }
+            return temp
+        }
+        count -= 1
+        return nil
+    }
+    
+    var size : Int{
+        return count
+    }
+}
+
