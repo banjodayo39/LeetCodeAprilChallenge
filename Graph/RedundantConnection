@@ -37,3 +37,59 @@ class Solution {
         return parent[v]
     }
 }
+
+
+//DFS Solution
+
+class Solution2 {
+    func findRedundantConnection(_ edges: [[Int]]) -> [Int] {
+        
+        var graph = [Int: [Int]]()
+ 
+        
+        for edge in edges{
+            var visited = Set<Int>()
+            
+            if graph.keys.contains(edge[0]) && 
+            graph.keys.contains(edge[1]) && dfs(edge[0], edge[1], &visited, graph){
+                return edge
+            }
+            
+            if graph.keys.contains(edge[0]){
+                graph[edge[0]]?.append(edge[1])
+            } else {
+                graph[edge[0]] = [edge[1]]
+
+            }
+        
+            if graph.keys.contains(edge[1]){
+                graph[edge[1]]?.append(edge[0])
+            } else {
+                graph[edge[1]] = [edge[0]]
+
+            }
+            
+            
+        }
+        
+        return []
+    }
+  
+    func dfs(_ source : Int, _ target : Int, _ visited : inout Set<Int>,
+             _ graph : [Int: [Int]]) -> Bool{
+        if !visited.contains(source){
+            visited.insert(source)
+             
+            if source == target {
+                return true
+            }
+            
+            for i in graph[source]!{
+                if (dfs(i, target, &visited, graph)){
+                    return true
+                }
+            }
+        }
+        return false
+    }
+}
