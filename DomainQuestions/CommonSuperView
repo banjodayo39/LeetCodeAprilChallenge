@@ -53,3 +53,13 @@ func commonSuperView(_ view1: UIView, _ view2 : UIView) -> Bool{
 let m = commonSuperView(view4, view5)
 print(m)
 
+func findParent(a: UIView, b: UIView) -> UIView? {
+    var v1: UIView? = a
+    var v2: UIView? = b
+    while(v1 != v2) {
+        v1 = v1 == nil ? b : v1?.superview
+        v2 = v2 == nil ? a : v2?.superview
+    }
+    return v1
+}
+
