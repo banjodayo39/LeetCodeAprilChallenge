@@ -7,3 +7,21 @@ extension Array {
     
 print([1,2,3,4].combinationsWithoutRepetition)
 
+extension Array {
+    var combinations: [[Element]] {
+        if count == 0 {
+            return [self]
+        }
+        else {
+            let tail = Array(self[1..<endIndex])
+            let head = self[0]
+
+            let first = tail.combinations
+            let rest = first.map { $0 + [head] }
+
+            return first + rest
+        }
+    }
+}
+
+print([1, 2, 3, 4].combinations)
