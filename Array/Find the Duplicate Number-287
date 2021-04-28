@@ -1,0 +1,17 @@
+var hare = nums[0]
+        var tor = nums[0]
+        
+        repeat{
+            hare = nums[nums[hare]]
+            tor = nums[tor]
+        } while(hare != tor)
+        
+        tor = nums[0]
+        
+        while (tor != hare){
+            tor = nums[tor]
+            hare = nums[hare]
+        }
+        
+        return hare 
+    }
