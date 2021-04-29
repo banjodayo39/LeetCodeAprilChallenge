@@ -1,0 +1,23 @@
+class Solution {
+    func isValidBST(_ root: TreeNode?) -> Bool {
+        return validate(root, nil, nil)
+         
+    }
+    
+    func validate(_ node : TreeNode?, _ low : Int?, _ high : Int?) -> Bool{
+        guard var node = node else{
+            return true
+        }
+        
+        if let low = low, node.val <= low{
+            return false
+        }
+        
+        if let h = high, node.val >= h{
+            return false
+        }
+        
+        return validate(node.right, node.val, high) && validate(node.left, low,                     node.val)
+    }
+    
+}
