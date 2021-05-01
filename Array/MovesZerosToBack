@@ -1,0 +1,13 @@
+func moveZerosToBack(_ arr: inout [Int]) -> [Int]{
+    
+    var l = 0
+    
+    for i in 0..<arr.count{
+        if arr[i] != 0{
+            (arr[i], arr[l]) = (arr[l], arr[i])
+            l += 1
+        }
+    }
+    
+    return arr
+}
