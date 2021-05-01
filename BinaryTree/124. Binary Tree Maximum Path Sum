@@ -1,0 +1,21 @@
+class Solution {
+    var maxValue = Int.min
+    
+    func maxPathSum(_ root: TreeNode?) -> Int {
+        maxWeight(root)
+        return maxValue
+    }
+    
+    private func maxWeight(_ node: TreeNode?) -> Int {
+        guard let node = node else {
+            return 0
+        }
+        
+        let leftMaxWeight = max(maxWeight(node.left), 0)
+        let rightMaxWeight = max(maxWeight(node.right), 0)
+        
+        maxValue = max(maxValue, leftMaxWeight + node.val + rightMaxWeight)
+        
+        return node.val + max(leftMaxWeight, rightMaxWeight)
+    }
+}
