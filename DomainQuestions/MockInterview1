@@ -1,0 +1,79 @@
+import UIKit
+
+func removeDuplicate(_ arr : [String]) -> [String]{
+    var sSet = Set<String>()
+    
+    for i in arr{
+        let l = i.lowercased()
+        sSet.insert(l)
+    }
+    
+    return Array(sSet)
+}
+
+
+ 
+ 
+
+var num = [1, 2, 0, 0, 0, 4, 7, 8, 9, 0]
+// time = O(n)
+func moveZeroToEnd(_ arr: inout [Int]) -> [Int]{
+    
+    var r = arr.count - 1
+    
+    while(arr[r] == 0){
+        r -= 1
+    }
+    
+    for i in 0..<arr.count{
+        
+        if i == r {
+            break
+        }
+        if arr[i] == 0{
+            print("found 0")
+            (arr[i], arr[r]) = (arr[r], arr[i])
+            r -= 1
+        }
+    }
+    
+    return arr
+    
+}
+
+func dequeReusableCell(with identifier : String, for indexPath : IndexPath) -> UITableViewCell?{
+    var cellMap = [String : UITableViewCell]()
+    
+    if cellMap.keys.contains(identifier){
+        return cellMap[identifier]
+    }
+    cellMap[identifier] = UITableViewCell()
+    return cellMap[identifier]
+}
+
+
+func fetchFeedInformation(){
+    
+    let group = DispatchGroup()
+    group.enter()
+    
+    DispatchQueue.global().asyncAfter(deadline : .now() + 5){
+        defer{
+            group.leave()
+        }
+        print("This is 5 seconds delay")
+    }
+    
+    group.enter()
+    DispatchQueue.global().asyncAfter(deadline : .now() + 4){
+        defer{
+            group.leave()
+        }
+        print("This is 4 seconds delay")
+    }
+    
+    group.notify(queue: .main){
+        print("Completed")
+    }
+    
+}
