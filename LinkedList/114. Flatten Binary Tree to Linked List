@@ -1,0 +1,33 @@
+class Solution {
+    func flatten(_ root: TreeNode?) {
+        var result = [TreeNode]()
+        
+        preOrderTraversal(root, &result)
+        print(result)
+        if result.count > 1{
+           toLinkedList(result)
+
+        } 
+        
+    }
+    
+    func preOrderTraversal(_ node : TreeNode?, _  result : inout [TreeNode]){
+         guard var node = node else {
+             return 
+         }
+        
+        result.append(node)
+        preOrderTraversal(node.left, &result)
+        preOrderTraversal(node.right, &result)
+    }
+    
+    func toLinkedList(_ result: [TreeNode]){
+        for i in 1..<result.count{
+            result[i-1].left = nil
+            result[i-1].right = result[i]
+        }
+        
+        result[result.count - 1].left = nil
+        result[result.count - 1].right = nil
+    }
+}
