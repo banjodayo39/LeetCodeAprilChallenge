@@ -1,0 +1,32 @@
+func doWork(){
+    let blockOperation = BlockOperation()
+    
+    blockOperation.qualityOfService = .utility
+    
+    blockOperation.addExecutionBlock {
+        print("This is the first added ")
+    }
+    
+    blockOperation.addExecutionBlock {
+        print("This is the second added for you")
+    }
+    
+    blockOperation.addExecutionBlock {
+        print("This is the third added")
+    }
+    
+    //blockOperation.start()
+    
+    let anotherBlockOperation = BlockOperation()
+    anotherBlockOperation.addExecutionBlock {
+        print("I am another block opertation")
+    }
+    
+    let operationQueue = OperationQueue()
+    anotherBlockOperation.addDependency(blockOperation)
+    operationQueue.maxConcurrentOperationCount = 2
+    operationQueue.addOperations([blockOperation,anotherBlockOperation ], waitUntilFinished: false)
+    
+}
+
+doWork()
