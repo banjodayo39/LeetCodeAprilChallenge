@@ -1,0 +1,32 @@
+class Solution {
+    func leastInterval(_ tasks: [Character], _ n: Int) -> Int {
+        var charArr = [Int](repeating : 0, count : 26)
+        
+        for i in tasks{
+
+            let index = Int(UnicodeScalar(String(i))!.value-UnicodeScalar("A").value)
+            charArr[index] += 1
+        }
+        print(charArr)
+        
+        //get the maximum
+       // let maxChar = charArr.max()
+        var maxChar = 0
+        for i in charArr{
+            if i > maxChar{
+                maxChar = i
+            }
+        }
+        print(maxChar)
+        var nMax = 0
+        
+        for i in charArr{
+            if i == maxChar {
+                nMax += 1
+            }
+        }
+        print(nMax)
+
+        return max(tasks.count, (maxChar - 1) * (n+1) + nMax)
+    }
+}
