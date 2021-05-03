@@ -1,0 +1,25 @@
+class Solution {
+    var visitedNode: [Int: Node] = [:]
+    
+    func cloneGraph(_ node: Node?) -> Node? {
+        
+        guard let val = node?.val else { 
+            return nil 
+        }
+        
+        if let cloneNode = visitedNode[val] {
+            return cloneNode 
+        }
+        
+        let root = Node(val)
+        
+        visitedNode[val] = root
+        
+        for neighbor in node?.neighbors ?? [] {
+            if let cloneNeighbor = cloneGraph(neighbor) {
+                root.neighbors.append(cloneGraph(neighbor))
+            }
+        }
+        return root
+    }
+}
