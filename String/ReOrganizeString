@@ -1,0 +1,47 @@
+class Solution {
+    func reorganizeString(_ S: String) -> String {
+        var n:Int = S.count
+        var idx:Int = 1
+        var cnt:[Int] = [Int](repeating:0,count:26)
+        var arrChar:[Character] = Array(S)
+        for char in S
+        {
+            cnt[char.ascii - 97] += 100
+        }
+        for i in 0..<26
+        {
+            cnt[i] += i
+        }
+        cnt.sort()
+        for num in cnt
+        {
+            var t:Int = num / 100
+            var ch:Character = (97 + (num % 100)).ASCII
+            if t > (n + 1) / 2 {return String()}
+            for i in 0..<t
+            {
+                if idx >= n {idx = 0}
+                arrChar[idx] = ch
+                idx += 2
+            }
+        }
+        return String(arrChar)
+    }
+}
+
+extension Character
+{
+   var ascii: Int {
+       get {
+           return Int(self.unicodeScalars.first?.value ?? 0)
+       }
+    }
+}
+
+extension Int
+{
+    var ASCII:Character
+    {
+        get {return Character(UnicodeScalar(self)!)}
+    }
+}
