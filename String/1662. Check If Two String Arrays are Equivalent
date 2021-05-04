@@ -1,0 +1,16 @@
+class Solution {
+    func arrayStringsAreEqual(_ word1: [String], _ word2: [String]) -> Bool {
+        var w1 = ""
+        var w2 = ""
+        
+        for i in 0..<word1.count{
+            w1 += word1[i]
+        }
+        
+         for i in 0..<word2.count{
+            w2 += word2[i]
+        }
+        
+         return w1 == w2
+    } 
+}
