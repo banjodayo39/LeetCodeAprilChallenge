@@ -1,0 +1,19 @@
+class Solution {
+    func maxSubArray(_ nums: [Int]) -> Int {
+        
+        var currSubArray = nums[0]
+        var maxSubArray = nums[0]
+
+        guard nums.count > 1 else {
+            return maxSubArray
+        }
+        
+        for i in 1..<nums.count{
+             currSubArray = max(currSubArray + nums[i], nums[i])
+             maxSubArray = max(maxSubArray, currSubArray)
+         
+        }
+        
+        return maxSubArray
+    }
+}
