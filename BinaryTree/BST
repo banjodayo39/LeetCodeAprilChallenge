@@ -1,0 +1,53 @@
+class Node<T> {
+var key: T
+var left: Node<T>?
+var right: Node<T>?
+init(key: T) {
+self.key = key
+}
+    
+}
+
+
+class BinaryTree<T: Comparable>{
+    var root : Node<T>?
+    
+    init(array : [T]){
+        for item  in array{
+            
+            var placed = false
+            if let rootNode = root{
+                var tracker = rootNode
+                
+                while placed == false{
+                    if item <= tracker.key{
+                        if tracker.left == nil{
+                            tracker.left = Node(key: item)
+                            placed = true
+                            tracker = tracker.left!
+                        }else {
+                            // this item is greater than our tracker, so it needs to sit on its right
+                            // if we don't already have a right node
+                            if tracker.right == nil {
+                            // make this item our right node
+                             tracker.right = Node(key: item)
+                            // mark it as placed
+                             placed = true
+                            }
+                            // we already have a right node; make that the tracker so we can compare against it.
+                             tracker = tracker.right!
+                            
+                        }
+                        
+                    } else {
+                             root = Node(key: item)
+                        
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+}
+
