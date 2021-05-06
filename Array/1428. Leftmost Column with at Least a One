@@ -1,0 +1,22 @@
+class Solution {
+    func leftMostColumnWithOne(_ binaryMatrix: BinaryMatrix) -> Int {
+		
+        var rows = binaryMatrix.dimensions()[0]
+        var cols = binaryMatrix.dimensions()[1]
+        
+        var currRow = 0
+        var currCol = cols - 1
+        var result = -1
+        
+        while currRow < rows && currCol >= 0{
+            if binaryMatrix.get(currRow, currCol) == 0{
+                currRow += 1
+            } else{
+                currCol -= 1
+            }
+        }
+        
+        return (currCol  != cols - 1) ? currCol + 1 : -1
+        
+    }
+}
