@@ -1,0 +1,31 @@
+        if lesson.freebie {
+            let trivia = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+            //return AvPlayerViewController(mediaUrl: lesson.trivia)
+            return AvPlayerViewController(mediaUrl: trivia)
+
+        } else{
+            let bundle = Bundle(identifier: "castlabs.CastlabsSDK")
+            let storyboard = UIStoryboard(name: "CLSDKStoryboard", bundle: bundle)
+            let clPlayerViewController = storyboard.instantiateViewController(withIdentifier: "CLPlayerViewController") as? CLPlayerViewController
+          
+            //clPlayerViewController?.streamUrl = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+            clPlayerViewController?.streamUrl = "https://d2zjjckqo1cait.cloudfront.net/drm_videos/98/package/Manifest.mpd"
+            clPlayerViewController?.preferNativePlayer = true
+            
+            let configuration = CLDrmConfiguration()
+            configuration.assetId = "staging-drm-video-7966fe7f-c6ff-4b1e-bd84-bfff8ec3b646"
+            configuration.merchantId = Constants.merchantID
+            configuration.sessionId = "staging-mobile-lesson-2900"
+            configuration.userId = "l-1107"
+            configuration.environment = .production
+            configuration.type = .oma
+        
+        
+            let filemgr = FileManager.default
+            configuration.workingDirectory = filemgr.currentDirectoryPath
+            configuration.tempDirectory = applicationDocumentsDirectory()
+            configuration.workingDirectory = NSTemporaryDirectory()
+            clPlayerViewController?.drmConfiguration = configuration
+            return clPlayerViewController
+        }
+    }
