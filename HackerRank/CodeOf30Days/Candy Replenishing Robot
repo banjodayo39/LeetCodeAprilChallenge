@@ -1,0 +1,22 @@
+let t = readLine()
+var s = readLine()
+
+//print("The value of \(t) and \(s)")
+
+let m = t!.components(separatedBy: " ") 
+let arr = s!.components(separatedBy: " ") 
+//print(m[0], arr)
+
+var result = 0
+let p = Int(m[0])!
+var n = Int(m[0])!
+
+for i in 0...arr.count - 2{
+     n -= Int(arr[i])!
+    if n < 5{
+        result  += p - n
+        n = p
+    }
+}
+
+print(result)
