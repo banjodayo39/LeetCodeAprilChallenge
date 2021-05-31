@@ -1,0 +1,48 @@
+class Solution {
+    var numberMap = [Int: [Int]]()
+    func countComponents(_ n: Int, _ edges: [[Int]]) -> Int {
+        var numberSet = Set<Int>()
+        var connectedComponent = 0
+        
+        for i in edges{
+            if numberMap[i[0]] != nil{
+                 numberMap[i[0]]?.append(i[1])
+            } else{
+               numberMap[i[0]] = [i[1]]
+            }
+            
+             if numberMap[i[1]] != nil{
+                numberMap[i[1]]?.append(i[0])
+            } else{
+               numberMap[i[1]] = [i[0]]
+            }
+        }
+        
+      if n > 0{
+            for i in 0..<n{
+            if !numberSet.contains(i){
+                connectedComponent += 1
+                dfs(i, &numberSet)
+            }
+        }
+      }
+        
+        return connectedComponent
+        
+    }
+    
+    func dfs(_ key : Int, _ numberSet : inout Set<Int>){
+        
+        numberSet.insert(key)
+        
+        if let elements =  numberMap[key]{
+            for i in elements{
+                if !numberSet.contains(i){
+                    dfs(i, &numberSet)
+                } 
+            }
+        }
+        
+        
+    }
+}
