@@ -1,0 +1,38 @@
+class Solution {
+    func numIslands(_ grid: [[Character]]) -> Int {
+        var grid = grid
+        if grid.count == 0 || grid[0].count == 0{
+            return 0
+        }
+        
+        var m = grid.count 
+        var n = grid[0].count
+        var islandCount = 0
+        
+        
+        for i in 0..<m{
+            for j in 0..<n{
+                if grid[i][j] == "1"{
+                    islandCount += 1
+                    dfs(&grid,m, n, i, j)
+                }
+            }
+        }
+        
+        return islandCount
+    }
+    
+    func dfs(_ grid: inout [[Character]], _ m : Int, _ n : Int, _ i : Int, _ j : Int){
+        
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] != "1") {
+            return;
+        }
+        
+        grid[i][j] = "X"
+        dfs(&grid, m, n, i - 1, j);
+        dfs(&grid, m, n, i + 1, j);
+        dfs(&grid, m, n, i, j - 1);
+        dfs(&grid, m, n, i, j + 1);
+        
+    }
+}
