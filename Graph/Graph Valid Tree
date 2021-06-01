@@ -51,3 +51,88 @@ class Solution {
     }
     
 }
+
+/**
+
+BFS Solution
+**/
+
+class Solution {
+    
+    var adj = [Int : [Int]]()
+
+    func validTree(_ n: Int, _ edges: [[Int]]) -> Bool {
+        var set = Set<Int>()
+        
+        for edge in edges{
+            
+            if adj[edge[0]] != nil{
+                adj[edge[0]]?.append(edge[1])
+            } else {
+                adj[edge[0]] = [edge[1]]
+            }
+            
+            if adj[edge[1]] != nil{
+                adj[edge[1]]?.append(edge[0])
+            } else {
+                adj[edge[1]] = [edge[0]]
+            }
+        }
+        
+        if n == 0{
+            return false
+        }
+        
+        var q = [Int]()
+        q.append(0)
+        
+        while !q.isEmpty{
+            
+            var val = q.removeFirst()
+            
+            if set.contains(val){
+                return false
+            } 
+            
+
+            if let list = adj[val]{
+                for i in list{
+                    if !set.contains(i){
+                        q.append(i)
+                    }
+                }
+            }
+                                set.insert(val)
+
+        }
+
+        
+        print(set)
+        return set.count == n
+     
+      // return dfs(0, -1, &set) && n == set.count
+    }
+    
+    func dfs(_ val : Int, _ prev : Int,_ set : inout Set<Int>) -> Bool{
+        if set.contains(val){
+            return false
+        }
+        
+        print(val)
+
+        set.insert(val)
+        if let list = adj[val]{
+            for i in list{
+            if prev == i{
+                dfs(i, val, &set)
+            } 
+            else if !dfs(i, val, &set){
+                    return false
+            }
+        }
+        }
+        
+        return true
+    }
+    
+}
