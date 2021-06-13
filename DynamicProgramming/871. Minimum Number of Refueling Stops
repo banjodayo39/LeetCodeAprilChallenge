@@ -1,0 +1,28 @@
+class Solution {
+    func minRefuelStops(_ target: Int, _ startFuel: Int, _ stations: [[Int]]) -> Int {
+        
+        let stationCount = stations.count
+        var dp = [Int64](repeating: 0, count: stationCount + 1)
+        dp[0] = Int64(startFuel)
+        
+        for i in 0..<stationCount{
+            for refill in stride(from : i , through: 0, by : -1){
+            if dp[refill] >= stations[i][0]{
+                    dp[refill + 1] = max(Int64(dp[refill + 1]), Int64(dp[refill] + Int64(stations[i][1])))
+                }
+            }
+        }
+        
+        for j in 0..<dp.count{
+                            print(dp[j], target)
+
+            if(dp[j] >= target){
+
+                return j
+            }
+        }
+        
+        return  -1
+        
+    }
+}
