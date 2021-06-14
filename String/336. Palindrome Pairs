@@ -1,0 +1,86 @@
+class Solution {
+    func palindromePairs(_ words: [String]) -> [[Int]] {
+        
+        var wordMap = [String: Int]()
+        var result = [[Int]]()
+        
+        for i in 0..<words.count{
+            wordMap[words[i]] = i
+        }
+        
+        
+        if let index = wordMap[""]{
+            for i in 0..<words.count{
+                if index != i && isPalindrome(words[i]){
+                    result.append([index, i])
+                    result.append([i, index])
+                }
+            }
+        }
+        
+        for index in 0..<words.count{
+            let revWord =  String(words[index].reversed())
+            if let i = wordMap[revWord]{
+                if index != i{
+                    result.append([index, i])
+                }
+            }
+        }
+        
+        for index in 0..<words.count{
+            let curr = words[index]
+            if curr.count < 1{
+                continue
+            }
+            for i in 1..<curr.count{
+                let left = String(curr.prefix(i))
+                let right = String(curr.suffix((curr.count - i)))
+                
+                if isPalindrome(left){
+                    let revRight =   String(right.reversed())
+                    if let i = wordMap[revRight]{
+                        if index != i{
+                            result.append([i, index])
+                        }
+                     }
+                }
+                
+                if isPalindrome(right){
+                    let revLeft =   String(left.reversed())
+                    if let i = wordMap[revLeft]{
+                        if index != i{
+                            result.append([index, i])
+                        }
+                     } 
+                }
+            }
+        }
+    
+        return result
+        
+    }
+    
+    func isPalindrome(_ givenWord : String) -> Bool{
+        
+        if givenWord.count == 1{
+            return true
+        }
+        
+        let word = Array(givenWord)
+        
+        var lPointer = 0
+        
+        var rPointer = word.count - 1
+        
+        while (lPointer < rPointer && lPointer < word.count && rPointer > 0){
+            
+            if word[lPointer] != word[rPointer]{
+                return false
+            }
+            lPointer += 1
+            rPointer -= 1
+        }
+        
+        return true
+    }
+}
