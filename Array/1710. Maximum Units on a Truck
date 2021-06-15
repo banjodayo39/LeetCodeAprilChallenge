@@ -1,0 +1,39 @@
+//Swift
+class Solution {
+    func maximumUnits(_ boxTypes: [[Int]], _ truckSize: Int) -> Int {
+        
+        var result = 0
+        var count = 0
+        
+        let newBoxOrder = boxTypes.sorted{$0[1] > $1[1]}
+        
+        for order in newBoxOrder{
+            if count >= truckSize{
+                return result
+            }
+            print(result , count)
+            let value = min(order[0], truckSize - count)
+            result += (order[1] * value)
+            count += value
+        }
+        
+        return result
+    }
+}
+
+
+#Python
+class Solution:
+    def maximumUnits(self, boxTypes: List[List[int]], truckSize: int) -> int:
+        boxTypes.sort(key = lambda x : -x[1])
+        
+        count = 0
+        maxUnit = 0
+        
+        for numBox, unit in boxTypes:
+            if count >= truckSize:
+                return maxUnit
+            maxUnit += unit * min(truckSize - count, numBox)
+            count += min(truckSize - count, numBox)    
+        
+        return maxUnit
