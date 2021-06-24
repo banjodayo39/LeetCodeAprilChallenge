@@ -1,0 +1,47 @@
+class Solution {
+    func reverseBetween(_ head: ListNode?, _ left: Int, _ right: Int) -> ListNode? {
+        
+        guard var head = head else{
+            return nil
+        }
+        
+        var curr : ListNode? = head
+        
+        var l = left 
+        var r = right
+        
+        var prev : ListNode? = nil
+        
+        while l > 1{
+            prev = curr
+            curr = curr?.next
+            
+            l -= 1
+            r -= 1
+            print("ther",r, l)
+        }
+        
+        var tail = curr
+        var con = prev
+        
+        while r > 0{
+            var temp = curr?.next
+            curr?.next = prev
+            prev = curr
+            curr = temp
+            r -= 1
+            print(r, l)
+
+        }
+        
+        if con != nil{
+            con?.next = prev
+        }else{
+            head = prev!
+        }
+        
+        tail?.next = curr
+        
+        return head
+    }
+}
