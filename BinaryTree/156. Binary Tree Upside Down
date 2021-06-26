@@ -1,0 +1,27 @@
+class Solution {
+    func upsideDownBinaryTree(_ root: TreeNode?) -> TreeNode? {
+        
+        guard var root = root else {
+            return nil
+        }
+        
+        return dfs(root)
+    }
+    
+    func dfs(_ curr : TreeNode) ->  TreeNode{
+        
+        guard var left = curr.left else{
+            return curr
+        }
+        
+        var newRoot = dfs(left)
+        print(curr.val, left.val, newRoot.val)
+        curr.left?.left = curr.right
+        curr.left?.right = curr
+        curr.left = nil
+        curr.right = nil
+        
+        return newRoot
+        
+    }
+}
