@@ -1,0 +1,39 @@
+class Solution {
+    func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
+        
+        guard let head = head else{
+            return nil
+        }
+        
+        guard let next = head.next else{
+            return head
+        }
+        
+        var length = 1
+        var curr : ListNode? = head
+        
+        while curr?.next != nil{
+            length += 1
+            curr = curr?.next
+        }
+        
+        curr?.next  = head
+        
+        var last :  ListNode? = head
+
+        var rotateRange = (length - (k % length) - 1)
+        print(length, rotateRange)
+        if rotateRange > 0{
+             for i in 0..<rotateRange{
+                last = last?.next
+            }   
+        }
+        
+        var newHead = last?.next
+        
+        last?.next = nil
+        
+       
+        return newHead
+    }
+}
