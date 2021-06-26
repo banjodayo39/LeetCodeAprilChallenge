@@ -1,0 +1,52 @@
+import UIKit
+
+
+
+
+let arr = (1...5).map( {_ in Int.random(in: 1...10)} )
+
+func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
+    var uniqueNumbers = Set<Int>()
+    while uniqueNumbers.count < numberOfRandoms {
+        uniqueNumbers.insert(Int(arc4random_uniform(maxNum + 1)) + minNum)
+    }
+    return uniqueNumbers.shuffled()
+}
+
+let m = uniqueRandoms(numberOfRandoms: 3, minNum: 0, maxNum: 3)
+print(m)
+
+typealias YEAR_MONTH_DAY = (year: Int, month: Int, day: Int)
+
+
+extension Date {
+    private static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    
+    var format : String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateFormat = Date.dateFormat
+        return dateFormatter.string(from: self)
+    }
+    
+    static func get(date string: String) -> YEAR_MONTH_DAY? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        formatter.dateFormat = Date.dateFormat
+        guard let date = formatter.date(from: string) else {
+            return nil
+        }
+
+        formatter.dateFormat = "yyyy"
+        let year = formatter.string(from: date)
+        formatter.dateFormat = "MM"
+        let month = formatter.string(from: date)
+        formatter.dateFormat = "dd"
+        let day = formatter.string(from: date)
+        
+        return (year, month, day) as? YEAR_MONTH_DAY
+    }
+}
+
+let f = Date().format
+print(f)
