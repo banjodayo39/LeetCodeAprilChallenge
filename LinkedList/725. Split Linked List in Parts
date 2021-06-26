@@ -1,0 +1,46 @@
+class Solution {
+    func splitListToParts(_ head: ListNode?, _ k: Int) -> [ListNode?] {
+        
+        var length = 0
+        var chunk = [Int]()
+        var result = [ListNode?]()
+        
+        var curr = head
+        
+        while curr != nil{
+            length += 1
+            curr = curr?.next
+        }
+        
+        //Find the chunk size of the split linkedlist
+        var chunkSize = length/k
+        var numOfLargerChunks = length % k
+                
+        
+        chunk = [Int](repeating: (chunkSize + 1), count : numOfLargerChunks) 
+                +  [Int](repeating: chunkSize, count : (k - numOfLargerChunks))
+        
+
+        var prev : ListNode?  = nil
+        curr = head
+        
+        for (index, number) in chunk.enumerated(){
+            
+            if prev != nil{
+                prev?.next = nil
+            }
+            
+            result.append(curr) 
+            
+            if number > 0{
+                for i in 0..<number{
+                    (prev, curr) = (curr, curr?.next)
+                
+                }
+            }
+        }
+        
+        return result
+        
+    }
+}
