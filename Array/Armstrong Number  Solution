@@ -1,0 +1,23 @@
+class Solution {
+    func isArmstrong(_ n: Int) -> Bool {
+        
+        
+        var remainder = n
+        var sum = 0
+        var nums = [Int]()
+        
+        while remainder > 0{
+            nums.append(remainder % 10)
+            remainder = remainder/10
+        }
+        
+        let totalNums = nums.count
+        
+        for i in nums{
+            sum += Int(pow(Double(i),Double(totalNums)))
+        }
+        
+        print(nums, sum)
+        return sum == n
+    }
+}
