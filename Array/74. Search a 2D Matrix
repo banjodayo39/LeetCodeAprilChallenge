@@ -1,0 +1,36 @@
+class Solution {
+    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+        
+        let m = matrix.count
+        if m == 0{
+            return false
+        }
+        
+        let n = matrix[0].count
+        
+        var left = 0
+        var right = m * n - 1
+        
+        
+        while left <= right{
+            var midIndex = (left + right) / 2
+            
+            var midEle = matrix[midIndex/n][midIndex % n]
+            
+            if target ==  midEle{
+                return true
+            } else{
+                 if target <  midEle{
+                    right = midIndex - 1
+                } else {
+                    left = midIndex + 1
+                }
+            }
+            
+        }
+        
+                    return false
+
+        
+    }
+}
