@@ -1,0 +1,44 @@
+
+class Solution {
+    
+    func reverseWords(_ s: inout [Character]) {
+        
+        var l = 0
+        var r = 0
+        
+        if s.count == 1{
+            return
+        }
+        
+        var end = s.count - 1
+
+        reverseChars(&s, &l, &end)
+        
+        l = 0
+        r = 0
+        
+        
+        while r <= s.count{
+            
+            if r == s.count || s[r] == " "{
+                var end = r - 1
+               reverseChars(&s, &l, &end) 
+               l = r + 1 
+            }
+            
+            r += 1
+        }
+        
+    }
+    
+    func reverseChars(_ s : inout [Character], _ i : inout Int,  _ j : inout Int){
+        
+        while i < j{
+            (s[i], s[j]) = (s[j], s[i])
+            
+            i += 1
+            j -= 1
+        }
+        
+    }
+}
