@@ -1,0 +1,45 @@
+class Solution {
+    func kSmallestPairs(_ nums1: [Int], _ nums2: [Int], _ k: Int) -> [[Int]] {    
+        
+        var pq = [[Int]]()
+        var temp = [[Int]]()
+        
+         for i in 0..<nums1.count{
+             for j in 0..<nums2.count{
+                temp.append([nums1[i], nums2[j]])
+             }
+         }
+        
+        for i in temp{
+             if pq.isEmpty{
+                     pq.append(i)
+                 } else{
+                     var l = 0
+                     var h = pq.count - 1
+                     
+                     while l <= h{
+                         var mid = l + (h - l) / 2
+                         
+                         if (pq[mid].reduce(0, +)) == i[0] + i[1]{
+                             l = mid
+                             break
+                         } else if (pq[mid].reduce(0, +)) > i[0] + i[1]{
+                             h = mid - 1
+                         } else{
+                             l = mid + 1
+                         }
+                     }
+                     
+                     pq.insert(i, at : l)
+                     
+                     if pq.count > k{
+                         pq.removeLast() 
+                     }
+                 }
+        }
+        
+        return pq
+    }
+    
+    
+}
