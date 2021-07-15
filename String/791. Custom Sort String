@@ -1,0 +1,39 @@
+class Solution {
+   func customSortString(_ order: String, _ str: String) -> String {
+        
+        if str.count < 2{
+            return str
+        }
+        
+        var charPos = [Character: Int]()
+        var newString = ""
+        
+        for (i, c) in str.enumerated(){
+            if let v = charPos[c]{
+                charPos[c] = v + 1
+            } else{
+                charPos[c] = 1
+            }
+        }
+        
+        for i in order{
+            if let v = charPos[i]{
+                for j in 0..<v{
+                    newString.append(String(i))
+                    charPos[i] = charPos[i]! - 1
+                }
+            }
+        }
+       
+        for (k,v) in charPos{
+            if v > 0{
+                for i in 0..<v{
+                    newString.append(String(k))
+                }
+            }  
+        }
+        
+        
+        return newString
+    }
+}
