@@ -1,0 +1,99 @@
+
+ public class Node {
+    public var val: Int
+    public var children: [Node]
+    public init(_ val: Int) {
+        self.val = val
+         self.children = []
+     }
+ }
+
+
+
+var nums = [1,0,-1,0,-2,2]
+nums.sort()
+print(nums)
+
+class LinkedNode {
+    
+    var node : Node
+    var next : LinkedNode?
+    
+    init(_ node : Node){
+        self.node = node
+        self.next = nil
+    }
+}
+
+
+class Queue{
+    
+    var head : LinkedNode?
+    var tail : LinkedNode?
+
+    var count : Int = 0
+    
+    init(){}
+    
+    var isEmpty : Bool{
+        return count ==  0
+    }
+    
+    func enqueue(_ node:Node){
+        var linkedNode = LinkedNode(node)
+        if head == nil{
+            head = linkedNode
+            tail = head
+        } else{
+            tail?.next = linkedNode
+            tail = linkedNode
+        }
+        count += 1
+    }
+    
+    func dequeue() -> Node?{
+        guard var linkedHead = head else {
+            return nil
+        }
+        
+        var node = linkedHead.node
+        head = linkedHead.next
+        count -= 1
+        return node
+    }
+    
+    
+}
+
+
+//[-2, -1, 0, 4]
+let n1 = Node(-2)
+let n2 = Node(-1)
+let n3 = Node(0)
+let n4 = Node(4)
+
+let q = Queue()
+q.enqueue(n1)
+q.enqueue(n2)
+let v = q.dequeue()
+print(v?.val)
+q.enqueue(n3)
+
+let v1 = q.dequeue()
+print(v1?.val)
+print(q.isEmpty)
+
+let v2 = q.dequeue()
+print(v2?.val)
+print(q.isEmpty)
+
+let v3 = q.dequeue()
+print(v3?.val)
+print(q.isEmpty)
+
+
+
+
+
+
+
