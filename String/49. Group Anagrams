@@ -1,0 +1,22 @@
+class Solution {
+    func groupAnagrams(_ strs: [String]) -> [[String]] {
+       var dict = [String : [String]]()
+    
+        var result = [[String]]()
+    
+        for str in strs{
+            var s = String(str.sorted{
+                $0 < $1
+            })
+
+        if dict[s] != nil{
+            dict[s]?.append(str)
+        } else{
+            dict[s] = [str]
+        }
+    }
+    
+     return result
+ 
+    }
+}
