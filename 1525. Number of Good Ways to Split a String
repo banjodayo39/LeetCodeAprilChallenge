@@ -1,0 +1,26 @@
+
+class Solution {
+    func numSplits(_ s: String) -> Int {
+        var arr = Array(s)
+        
+        guard arr.count > 1 else{
+            return 0
+        }
+        
+        var count = 0
+        
+        for i in 0..<arr.count - 1{
+            
+            var set1 = Set(Array(arr[0...i]))
+            var set2 = Set(Array(arr[i+1..<arr.count]))
+            
+            if set1.count == set2.count{
+                count += 1
+            }
+            
+        }
+        
+        return count
+        
+    }
+}
