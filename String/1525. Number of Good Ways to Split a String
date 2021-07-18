@@ -1,0 +1,42 @@
+class Solution {
+    func numSplits(_ s: String) -> Int {
+        
+        var map1 = [Character : Int]()
+        var map2 = [Character : Int]()
+        
+        var count = 0
+        
+        for i in s{
+            if let v = map1[i]{
+                map1[i] = v + 1
+            } else{
+                map1[i] = 1
+            }
+        }
+        
+        for i in s{
+            if let v = map1[i]{
+                if v == 1{
+                    map1.removeValue(forKey: i)
+                } else{
+                    map1[i] = v - 1
+                }
+            }
+            
+            if let u = map2[i]{
+                map2[i] = u + 1
+            } else{
+                map2[i] = 1
+            }
+            
+            if map1.count == map2.count {
+                count += 1
+            }
+        }
+        
+            return count
+
+        
+    }
+    
+}
