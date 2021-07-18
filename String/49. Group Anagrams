@@ -20,3 +20,39 @@ class Solution {
  
     }
 }
+
+class Solution {
+    func groupAnagrams(_ strs: [String]) -> [[String]] {
+        
+        var dict = [String : [String]]()
+        
+         for str in strs{
+             
+             var count  = [Int](repeating: 0, count : 26)
+             
+             var diff = 0
+             for i in str{
+                 let n =  Unicode.Scalar(String(i))?.value ?? 0
+                 diff =  Int(n - Unicode.Scalar("a").value)
+                 count[diff] += 1
+             } 
+             
+             var key = ""
+             
+             for i in count{
+                 key.append(String(i))
+                 key.append("#")
+             }
+             
+             if dict[key] != nil{
+                 dict[key]?.append(str)
+             } else{
+                 dict[key] = [str]
+             }
+         }
+        
+        return Array (dict.map{
+            $0.value
+        })
+    }
+}
