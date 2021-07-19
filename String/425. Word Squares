@@ -1,0 +1,65 @@
+class Solution {
+    
+    var words = [String]()
+    var prefixMap = [String: [String]]()
+    var n = 0
+    
+    func wordSquares(_ words: [String]) -> [[String]] {
+        
+        var result = [[String]]()
+        
+        n = words[0].count
+        buildPrefixMap(words)
+        
+        for word in words{
+            var wordSquares = [word]
+            backtrack(1, &wordSquares, &result)
+        }
+        
+        return result
+    }
+    
+    func  backtrack(_ idx : Int, _ wordSquares : inout [String], _ results : inout [[String]]){
+        if idx == n{
+            results.append(wordSquares)
+            return
+        }
+        
+        var prefix = ""
+        
+        for word in wordSquares{
+            var charArr = Array(word)
+            prefix.append(charArr[idx])
+        }
+        
+        for word in getWordsFromPrefix(prefix){
+            wordSquares.append(word)
+            var newId = idx + 1
+            backtrack(newId, &wordSquares, &results)
+            wordSquares.removeLast()
+        }
+         
+    }
+    
+    func buildPrefixMap(_ words: [String]){
+        
+        for word in words{
+            var charArr = Array(word)
+            
+            for (i,c) in charArr.enumerated(){
+                
+                let prefix = String(charArr[0...i])
+                
+                if prefixMap[prefix] != nil{
+                    prefixMap[prefix]?.append(word)
+                } else{
+                    prefixMap[prefix]  = [word]
+                }
+            }
+        }
+    }
+    
+    func getWordsFromPrefix(_ prefix : String) -> [String]{
+        return prefixMap[prefix] ?? []
+    }
+}
