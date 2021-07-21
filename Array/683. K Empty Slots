@@ -1,0 +1,44 @@
+class Solution {
+    func kEmptySlots(_ bulbs: [Int], _ k: Int) -> Int {
+        
+        guard bulbs.count > 2 else {
+            return -1
+        }
+        
+        var l = 1 
+        var r = l + 1 + k
+        
+        var result = Int.max
+        
+       var activeSet = Set<Int>()
+        
+       //add the day each of bulb active for each bulb per day 
+       var position = [Int](repeating: 0, count : bulbs.count + 1) 
+        
+        for i in 0..<bulbs.count{
+            position[bulbs[i]] = i + 1
+        }
+        
+        var i = 1
+        while r <= bulbs.count{
+              
+              if position[i] > position[l] && position[i] > position[r]{
+                    i += 1
+                    continue
+                }
+               
+            
+                if i == r{
+                    result = min(result, max(position[l], position[r] ))
+                }
+
+                l  = i
+                r = i + k + 1
+                i += 1
+        }
+        
+       
+        return result == Int.max ? -1 : result
+        
+    }
+}
