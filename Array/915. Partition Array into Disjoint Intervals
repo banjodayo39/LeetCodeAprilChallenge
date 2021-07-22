@@ -38,3 +38,26 @@ class Solution {
         return 1
     }
 }
+
+
+class Solution {
+    func partitionDisjoint(_ nums: [Int]) -> Int {
+        
+        var maxVal = nums[0]
+        var allMax = nums[0]
+        
+        var ans = 1
+        
+        for i in 0..<nums.count{
+            if nums[i] < maxVal{
+                ans = i + 1
+                maxVal = allMax
+            } else{
+                allMax = max(allMax, nums[i])
+            }
+            
+        }
+        
+        return ans
+    }
+}
