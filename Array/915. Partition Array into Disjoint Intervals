@@ -1,0 +1,40 @@
+class Solution {
+    func partitionDisjoint(_ nums: [Int]) -> Int {
+        
+        var l = 0
+        
+        var r = 1
+        var maxArr = [Int]()
+        var minArr = [Int](repeating : 1000000, count : nums.count)
+        //[5,0,3,8,6, 1]
+        //[1,1,1,0,6,12]
+        //[1,1, 1]
+        
+        var currMax = nums[0]
+        var currMin =  nums[nums.count - 1]
+        
+        for i in 0..<nums.count{
+            if currMax < nums[i]{
+                currMax = nums[i]
+            }
+           
+           maxArr.append(currMax) 
+            if currMin > nums[nums.count - i - 1]{
+                currMin = nums[nums.count - i - 1]
+            }
+            
+            minArr[nums.count - i - 1] = currMin
+        
+        }
+        //print(minArr, maxArr)
+        
+        for i in 1..<nums.count{
+            if maxArr[i - 1] <= minArr[i]{
+                return i 
+            }
+        }
+
+        
+        return 1
+    }
+}
