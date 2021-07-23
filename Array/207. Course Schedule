@@ -1,0 +1,62 @@
+class Solution {
+    func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
+        
+        // build the graph 
+        var preMap = [Int : [Int]]()
+        
+        for relation in prerequisites{
+            if preMap[relation[1]] == nil{
+                preMap[relation[1]] = [relation[0]]
+            } else {
+                preMap[relation[1]]?.append(relation[0])
+            }
+        }
+        
+        var visited = [Bool](repeating : false, count : numCourses)
+        var path = [Bool](repeating: false, count : numCourses)
+        
+        for i in 0..<numCourses{
+            if isCyclic(i, preMap, &visited, &path){
+                return false
+            }
+        }
+        
+        return true
+        
+    }
+    
+    func isCyclic(_ currCourse : Int, _ preMap : [Int: [Int]], 
+                 _ visited : inout [Bool], _ path :  inout [Bool]) -> Bool{
+        
+        // this node has been visted no cycle can be formed
+        if visited[currCourse]{
+            return false
+        }
+        
+        if path[currCourse]{
+            //indicate  detected cycle
+            return true
+        }
+        
+        path[currCourse] = true
+        var ret = false
+        
+        
+        if let courses = preMap[currCourse]{
+            for child in courses{
+                ret = isCyclic(child, preMap, &visited, &path)
+                
+                if ret{
+                    break
+                }
+            }
+        }
+        
+        //remove the node from the path
+        path[currCourse] = false
+        
+        // complete the check of the node
+        visited[currCourse] = true
+        return ret
+    }
+}
