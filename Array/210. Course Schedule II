@@ -1,0 +1,56 @@
+class Solution {
+    var result = [Int]()
+
+    func findOrder(_ numCourses: Int, _ prerequisites: [[Int]]) -> [Int] {
+        
+        var preMap = [Int : [Int]]()
+        
+        for req in prerequisites{
+            if preMap[req[0]] == nil{
+                preMap[req[0]] = [req[1]]
+            } else{
+                preMap[req[0]]?.append(req[1])
+            }
+        }
+        
+        var path = [Bool](repeating: false, count: numCourses)
+        var visited = [Bool](repeating: false, count : numCourses)
+        
+        
+        for i in 0..<numCourses{
+              if  dfs(i, preMap, &path,  &visited){
+                  return []
+              }
+            
+        }
+        
+        return result
+        
+    }
+    
+    func dfs(_ curr: Int, _ preMap : [Int: [Int]], _ path : inout [Bool],  _ visited: inout [Bool]) -> Bool{
+        if visited[curr]{
+            return false
+        }
+        
+        if path[curr]{
+            return true
+        }
+        path[curr] = true
+        var res = false
+        
+        if let courses = preMap[curr]{
+            for course in courses{
+               res = dfs(course, preMap, &path,  &visited)
+                if res{
+                    break
+                }
+            }
+        }
+        
+        path[curr] = false
+        visited[curr] = true
+        result.append(curr)
+        return res
+    } 
+}
