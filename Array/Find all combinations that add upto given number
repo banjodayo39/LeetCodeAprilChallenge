@@ -1,0 +1,48 @@
+func breakdown(_ n: Int) -> [[Int]] {
+    
+    var matrix  = [[Int]]()
+    var set = Set<Int>()
+    var arr = [Int](repeating: 0, count: n)
+    var reducedNum = n
+    findCombinations( &matrix, &arr, 0, n, &reducedNum, &set)
+    
+    matrix.sort {
+        $0.reduce(0, +) < $1.reduce(0, +)
+    }
+    return matrix
+}
+
+
+func findCombinations(_ matrix: inout [[Int]] , _ arr : inout [Int], _ index : Int,_  num : Int,_ reducedNum : inout Int, _ set : inout Set<Int>){
+    // Base condition
+    if (reducedNum < 0){
+        return
+    }
+ 
+    if (reducedNum == 0)
+    {
+        var b = [Int]()
+        var ele = 1
+        for i in 0..<index{
+            ele *= arr[i]
+            b.append(arr[i])
+
+        }
+        if !set.contains(ele){
+            matrix.append([ele])
+        }
+        print(b)
+        set.insert(ele)
+        return
+    }
+ 
+  
+    let prev = (index == 0) ?
+                          1 : arr[index - 1];
+ 
+    for i in prev...num{
+        arr[index] = i
+        var new = reducedNum - i
+        findCombinations(&matrix, &arr, index + 1, num, &new, &set);
+    }
+}
