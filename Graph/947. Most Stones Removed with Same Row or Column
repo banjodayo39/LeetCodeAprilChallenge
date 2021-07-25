@@ -1,0 +1,58 @@
+class Solution {
+    func removeStones(_ stones: [[Int]]) -> Int {
+        
+        var adjX = [Int : [Int]]()
+        var adjY = [Int: [Int]]()
+        
+        var visited = Set<[Int]>()
+        var conns = 0
+        
+        for edge in stones{
+            
+            if adjX[edge[0]] == nil{
+                adjX[edge[0]] = [edge[1]]   
+            } else{
+                adjX[edge[0]]?.append(edge[1])
+            }
+            
+            if adjY[edge[1]] == nil{
+                adjY[edge[1]] = [edge[0]]
+            } else{
+                 adjY[edge[1]]?.append(edge[0])
+            }
+        }
+        
+        for edge in stones{
+            if !visited.contains(edge){
+                dfs(edge, adjX, adjY, &visited)
+                conns += 1
+            }
+        }
+        
+        
+        return stones.count - conns
+    }
+    
+    func dfs(_ edge : [Int], _ adjX : [Int: [Int]], _ adjY: [Int: [Int]], _ visited : inout Set<[Int]>){
+        visited.insert(edge)
+        
+        if let arrX = adjX[edge[0]]{
+            for y in arrX{
+                if !visited.contains([edge[0], y]){
+                    dfs([edge[0], y], adjX, adjY, &visited)
+                }
+            }
+        }
+        
+        if let arrY = adjY[edge[1]]{
+            for x in arrY{
+              if !visited.contains([x, edge[1]]){
+                    dfs([x, edge[1]], adjX, adjY, &visited)
+                }
+            }
+        }
+    } 
+
+    
+    
+}
