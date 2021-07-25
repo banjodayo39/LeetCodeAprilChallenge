@@ -1,0 +1,60 @@
+
+let charMatrix :  [[Character]] =  [
+    ["#", " ", "#"],
+    [" ", " ", "#"],
+    ["#", "c", " "]
+    ]
+func crossWord(_ matrix : [[Character]], _ str : String) -> Bool{
+    
+    // check horizontal
+    
+    var wordList  =  [String]()
+    if matrix[0].count == str.count{
+        let charArr = Array(str)
+        
+        for i in 0..<matrix.count{
+            wordList.append(String(matrix[i]))
+        }
+    }
+    
+    
+    // check vertical
+    
+    if matrix.count == str.count{
+        for i in 0..<matrix[0].count{
+            var newWord = ""
+            for j in 0..<matrix.count{
+                newWord.append(matrix[j][i])
+            }
+            wordList.append(newWord)
+        }
+    }
+
+    print(wordList)
+    for word in wordList{
+        if compareStrings(word, str){
+            print(word)
+            return true
+        }
+    }
+    
+    return false
+}
+
+func compareStrings(_ str1 : String, _ givenWord: String ) -> Bool{
+    
+    let arr1 = Array(str1)
+    let arr2 = Array(givenWord)
+    
+    guard arr1.count == arr2.count else{
+        return false
+    }
+    
+    for i in 0..<arr1.count{
+        if arr1[i] == "#" || arr1[i] != arr2[i] && arr1[i] != " "{
+            return false
+        }
+    }
+    
+    return true
+}
