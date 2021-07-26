@@ -1,0 +1,49 @@
+class Solution {
+    func characterReplacement(_ s: String, _ k: Int) -> Int {
+        var maxOccur = 0
+        var charOccur = [Character: Int]()
+        var start = 0
+        var maxWindow = 0
+        var currWindow = 0
+        
+        var charArr = Array(s)
+        
+        for i in 0..<charArr.count{
+            
+            let char  = charArr[i]
+            currWindow += 1
+            
+            //append into map
+            if let value = charOccur[char]{
+                charOccur[char] = value + 1
+            }else{
+                charOccur[char] = 1
+            }
+            
+            let occur = charOccur[char] ?? 0
+            
+            if occur > maxOccur{
+                maxOccur = occur
+            }
+            
+            //check if its a valid window
+            if currWindow - maxOccur > k{
+                currWindow -= 1
+                let startChar = charArr[start]
+                if let val = charOccur[startChar] {
+                    charOccur[startChar]  = val - 1
+                }
+                start += 1
+            }
+            
+            //update max window
+            if currWindow > maxWindow{
+                maxWindow = currWindow
+            }
+        }
+        
+      
+        return maxWindow
+    }
+}
+
