@@ -1,0 +1,35 @@
+class Solution {
+    func lengthOfLongestSubstringTwoDistinct(_ s: String) -> Int {
+        
+        var charArr = Array(s)
+        
+        var l = 0, r = 1
+        var charMap = [Character : Int]()
+        var uniqueCharCount = 0
+        var maxLen = 0
+        
+       for (i, c) in s.enumerated(){
+           if let v = charMap[c]{
+               charMap[c] = v + 1 
+           } else{
+               charMap[c] = 1
+           }
+
+                while charMap.count  > 2{
+                    if let v = charMap[charArr[l]]{
+                         charMap[charArr[l]] = v - 1 
+                    if v == 1{
+                        charMap.removeValue(forKey: charArr[l])
+                    }
+                    l += 1  
+
+                } 
+            }
+           maxLen = max(maxLen, i - l + 1)
+       }
+        
+        
+        return  maxLen
+        
+    }
+}
