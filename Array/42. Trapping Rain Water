@@ -1,0 +1,33 @@
+class Solution {
+    func trap(_ height: [Int]) -> Int {
+        
+        let n = height.count 
+        guard  n > 2 else{
+            return 0
+        }
+        
+        var rMaxArr = [Int](repeating :0, count : n)
+        
+        var lMaxArr = [Int](repeating :0, count : n)
+        
+        var lMax = height[0]
+        var rMax = height[n - 1]
+        
+        var ans = 0
+        
+        for i in 1..<n{
+            lMax = max(lMax, height[i])
+            lMaxArr[i] = lMax
+        }
+        for i in stride(from : n - 2, through: 0, by : -1){
+            rMax = max(rMax, height[i])
+            rMaxArr[i] = rMax
+        }
+        for i in 1..<n - 1{
+            ans += max(min(lMaxArr[i], rMaxArr[i]) - height[i], 0)
+        }
+        
+        return ans
+        
+    }
+}
