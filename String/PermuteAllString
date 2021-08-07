@@ -1,0 +1,13 @@
+func permute(_ chars : inout [Character], _ l : Int, _ r : Int) {
+
+    if l == r{
+        count += 1
+        print(String(chars))
+    }else{
+        for i in l..<r{
+            chars.swapAt(i, l)
+            permute(&chars, l + 1,  r)
+            chars.swapAt(i, l)
+        }
+    }
+}
