@@ -1,0 +1,35 @@
+func nextPermutation(_ nums: inout [Int]) {
+        
+        var i = nums.count - 2
+        
+        //6215430 --> swap 1 and 3
+        //6235410  --> reverse from 5
+        //6230145
+        
+         //loop from the back to get the strictly decreasing elements
+        while i >= 0 && nums[i + 1] <= nums[i]{
+            i -= 1
+        }
+        
+        if i >= 0{
+            var j = nums.count - 1
+            
+            while (nums[j] <= nums[i]){
+                j -= 1
+            }
+            
+            nums.swapAt(i, j)
+        }
+        
+        reverse(&nums, i + 1)
+    }
+    
+    func reverse(_ nums: inout [Int], _ start: Int){
+        var i = start, j = nums.count - 1
+        
+        while i < j{
+            nums.swapAt(i, j)
+            i += 1
+            j -= 1
+        }
+    }
