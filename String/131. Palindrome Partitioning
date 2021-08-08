@@ -1,0 +1,52 @@
+class Solution {
+    
+     var res = [[String]]()
+     var chars = [Character]()
+    
+    func partition(_ s: String) -> [[String]] {
+       
+        var part = [String]()
+        chars = Array(s)
+
+        dfs(&part, 0, s.count)
+        return res
+    }
+    
+    func dfs(_ part : inout [String], _ index : Int , _ n :Int){
+        if index >= n{
+            res.append(part)
+            return
+        }
+        
+        for i in index..<n{
+            let w = String(chars[index...i])
+            if isPalindrome(w){
+                part.append(w)
+                dfs(&part, i + 1, n)
+                part.popLast()
+                
+            }
+        }
+    }
+    
+    func isPalindrome(_ s: String) -> Bool{
+        guard  s.count > 0 else{
+            return true
+        }
+        
+        let chars = Array(s)
+        
+        var l = 0
+        var r = s.count - 1
+        
+        while l <= r{
+            if chars[l] != chars[r]{
+                return false
+            }
+            l += 1
+            r -= 1
+        }
+        
+        return true
+    }
+}
