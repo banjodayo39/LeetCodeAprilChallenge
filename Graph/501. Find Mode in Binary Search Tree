@@ -1,0 +1,36 @@
+class Solution {
+    /// - Complexity:
+    ///     - Time: O(n), number of nodes in the tree.
+    ///     - Space: O(1), Assume that the implicit stack space incurred due to recursion does not count.
+    ///
+    func findMode(_ root: TreeNode?) -> [Int] {
+        var last = -1
+        var count = 0
+        var result: [Int] = []
+        var mCount = 0
+        func inorder(_ root: TreeNode?) {
+            guard let root = root else { return }
+            
+            inorder(root.left)
+            
+            if root.val == last {
+                count += 1
+            } else {
+                count = 1
+                last = root.val
+            }
+            if count > mCount {
+                mCount = count
+                result = [last]
+            } else if count == mCount {
+                result.append(last)
+            }
+            
+            inorder(root.right)
+        }
+        
+        inorder(root)
+        
+        return result
+    }
+}
