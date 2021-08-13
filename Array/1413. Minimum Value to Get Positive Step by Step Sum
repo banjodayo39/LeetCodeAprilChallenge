@@ -1,0 +1,19 @@
+class Solution {
+    func minStartValue(_ nums: [Int]) -> Int {
+        var  start  = 1
+        let n = nums.count - 1
+
+        for i in stride(from: n, through: 0, by: -1){
+            start = start - nums[i]
+
+            if start < 1 {
+                start = 1
+            }
+
+        }
+
+        return start
+    }
+    
+
+}
