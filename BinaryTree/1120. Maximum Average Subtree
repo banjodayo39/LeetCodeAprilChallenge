@@ -1,0 +1,34 @@
+lass Solution {
+    func maximumAverageSubtree(_ root: TreeNode?) -> Double {
+        guard root != nil else{
+            return 0
+        }
+        var sum = 0.0
+                
+       let  _ = dfs(root, &sum)
+        
+        return sum 
+    }
+    
+    func dfs(_ node : TreeNode?, _ sum : inout Double) -> [Int]{
+        
+        guard var node = node else {
+            return [0, 0]
+        }
+        
+        let left = dfs(node.left, &sum)
+    
+        let right = dfs(node.right, &sum)
+        
+        let currSum  = left[0] + right[0] + node.val
+        
+        let h = left[1] + right[1] + 1
+        
+        let average = Double(currSum)/Double(h)
+        
+        sum = max(average, sum)
+        
+        return [currSum, h]
+               
+    }
+}
