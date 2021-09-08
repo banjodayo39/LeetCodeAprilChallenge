@@ -1,0 +1,22 @@
+func lengthLongestPath(_ input: String) -> Int {
+        
+        var maxCount = 0
+        var arr = input.components(separatedBy: "\n")
+        
+        var dict : [Int: Int] = [-1: 0]
+        
+        for str in arr{
+            
+            let temp = str.reduce(0){
+                return $1 == "\t" ? $0 + 1 : $0
+            } 
+            
+            dict[temp] = str.count - temp  + (dict[temp - 1] ?? 0)
+            
+            if str.contains("."){
+                maxCount = max(maxCount, (dict[temp] ?? 0) + temp)
+            }
+        }
+        
+        return maxCount
+    }
