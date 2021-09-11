@@ -1,0 +1,27 @@
+var results = Set<[Int]>()
+func subsequence(nums : [Int]) -> [[Int]]{
+    
+    var path  = [Int]()
+    
+    dfsSq(nums, &path, 0)
+
+    
+    print(results.count)
+    return Array(results)
+}
+
+func dfsSq(_ nums: [Int], _ path : inout [Int], _ i : Int){
+    print(path, i)
+
+    if nums.count == i{
+        results.insert(path)
+    }
+    else{
+
+    dfsSq(nums, &path, i+1)
+    path.append(nums[i])
+    dfsSq(nums, &path, i+1)
+    
+    path.popLast()
+    }
+}
