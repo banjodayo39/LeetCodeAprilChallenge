@@ -1,0 +1,28 @@
+class Solution {
+    func totalFruit(_ fruits: [Int]) -> Int {
+        
+        var maxCount = 1
+        
+        var l = 0        
+        var dict : [Int : Int] = [fruits[0] : 0]
+        
+        for r in 1..<fruits.count{
+            if dict[fruits[r]] == nil{
+                if  dict.count >= 2{
+                                     //   print(dict, "It ", r)
+                    if let val = dict[fruits[r - 1]]{
+                        dict = [fruits[r - 1] : val]
+                        l = val
+                    } 
+                }
+                dict[fruits[r]] = r
+            } else if fruits[r - 1] != fruits[r]{
+                dict[fruits[r]] = r
+            }
+                        
+            maxCount = max(maxCount, r - l + 1)
+        }
+        
+        return maxCount
+    }
+}
