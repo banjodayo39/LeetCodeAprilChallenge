@@ -1,0 +1,50 @@
+class Solution {
+    func spiralOrder(_ matrix: [[Int]]) -> [Int] {
+       
+        let m = matrix.count //row
+        let n = matrix[0].count //col
+        
+        var res = [Int]()
+        
+        let total = m * n
+        
+        var r = m
+        var c = n
+        
+        var sh = 0
+        var sv = 1
+        var h = m
+        var v = n - 1
+        
+        while res.count < total{
+            
+            //move left to right
+            
+            for i in sh..<h{
+                res.append(matrix[sh][i])
+            }
+            
+            
+            //move top to down
+            
+            for i in sh..<m{
+                res.append(matrix[i][v])
+            } 
+            
+            //move right to left
+            for i in stride(from: n - sv, to: sh, by : -1){
+               res.append(matrix[m - sh - 1][i]) 
+            }
+            //move down to top
+            for i in stride(from: m - sv - 1, to: sh + 1, by : -1){
+               res.append(matrix[i][sh]) 
+            } 
+                        sh += 1
+
+            h -= 1
+            print(sh, h)
+        }
+        
+        return res
+    }
+}
