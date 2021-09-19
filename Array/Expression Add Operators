@@ -1,0 +1,42 @@
+class Solution {
+    
+    var result = [String]()
+    var symbols = [0, 1, 2] //+, * , -
+    
+    func addOperators(_ num: String, _ target: Int) -> [String] {
+        
+        dfs(Array(num), 0, 0, "", 0, target)
+        return result
+        
+    }
+    
+    func dfs(_ nums : [Character], _ currVal : Int, _ prev: Int, _ path : String, _ index : Int, _ target: Int){
+        if index == nums.count{
+            //print(currVal, target)
+            if currVal == target{
+                result.append(path)
+            }
+         
+        }
+       
+        for j in index..<nums.count{
+            
+            
+            if j > index && nums[index] == "0"{
+                break
+            } 
+            var currNum = Int(String(nums[index..<j+1])) ?? 0
+
+            if index == 0 {
+                dfs(nums, currNum, currNum, String(currNum) , j + 1, target)
+
+            }else{
+                    dfs(nums, currVal + currNum, currNum, path + "+" + String(currNum) , j + 1, target)
+                    dfs(nums, currVal - currNum, -currNum, path + "-" + String(currNum) , j + 1, target)
+                    dfs(nums, currVal - prev + prev * currNum, prev * currNum, path + "*" + String(currNum) , j + 1, target)
+            }
+            
+
+        }
+    }
+}
