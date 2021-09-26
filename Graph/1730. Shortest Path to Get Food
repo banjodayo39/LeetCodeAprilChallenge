@@ -1,0 +1,51 @@
+class Solution {
+    func getFood(_ grid: [[Character]]) -> Int {
+        let r = grid.count, c = grid[0].count;
+        var visited = Array(repeating: Array(repeating: false, count: c), count: r)
+        
+        var startRow = -1, startColumn = -1;
+        var total = r * c;
+        
+        //Find the position of the player
+        for i in 0..<total {
+            let row = i / c, column = i % c;
+            if (grid[row][column] == "*") {
+                startRow = row;
+                startColumn = column;
+                break;
+            }
+        }
+        
+        visited[startRow][startColumn] = true
+        
+        var queue = [[Int]]()
+        queue.append([startRow, startColumn]);
+        var directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+        var steps = 0;
+        
+        while (!queue.isEmpty) {
+            let size = queue.count
+            
+            for i in 0..<size{
+                let cell = queue.removeFirst()
+                let row = cell[0], column = cell[1];
+                
+                // if destination reached 
+                if (grid[row][column] == "#"){
+                   return steps 
+                }
+                    
+                
+                for direction in directions{
+                    let newRow = row + direction[0], newColumn = column + direction[1];
+                    if (newRow >= 0 && newRow < r && newColumn >= 0 && newColumn < c && grid[newRow][newColumn] != "X" && !visited[newRow][newColumn]) {
+                        visited[newRow][newColumn] = true;
+                        queue.append([newRow, newColumn])
+                    }
+                }
+            }
+            steps += 1
+        }
+        return -1;
+    }
+}
