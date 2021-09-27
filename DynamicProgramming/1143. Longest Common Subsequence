@@ -1,0 +1,24 @@
+class Solution {
+    func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
+      
+        var t2 = text2.count-1
+        let t1 = text1.count-1
+        
+        let chars1 = Array(text1)
+        let chars2 = Array(text2)
+        
+        var dp = Array(repeating: Array(repeating: 0, count: text2.count+1), count: text1.count+1)
+        
+        for i in stride(from: t2, to:-1, by:-1 ){
+            for j in stride(from: t1, to: -1, by: -1){
+                if chars1[j] == chars2[i]{
+                    dp[j][i] = 1 + dp[j+1][i+1]
+                }else{
+                    dp[j][i] = max(dp[j][i+1], dp[j+1][i])
+                }
+            }
+        }
+        
+        return dp[0][0]
+    }
+}
