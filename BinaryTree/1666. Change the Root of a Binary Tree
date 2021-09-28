@@ -1,0 +1,28 @@
+class Solution {
+   public Node flipBinaryTree(Node root, Node leaf) {
+        if(root==null || leaf==null) return root;
+        Node newParent = null;
+        Node curr = leaf;
+        while(curr!=root) {
+            if(curr.parent.right == curr) { // if right side of the curr has been modified
+                // when we reach to original root, do not move the left node to right as only right leaves been modified
+                if(curr.parent == root) curr.parent.right = null;
+                else {
+                    // if curr is not the original root, move left leaves to right
+                    curr.parent.right = curr.parent.left;
+                    curr.parent.left = null; // as we no longer have left nodes set it to null
+                }
+            } else {
+                //if left side of the curr node has been modified then do not touch right leaves and just set left to null
+                curr.parent.left = null;
+            }
+            Node next = curr.parent; 
+            curr.left = curr.parent; // move parent to the leaves left side
+            curr.parent = newParent; // set the curr's new parent pointer
+            newParent = curr; // set new parent to curr for the next move
+            curr = next; // set existing parent (old parent) to curr.
+        }
+        curr.parent = newParent; // make sure we update the last node's new parent (original root's new parent)
+        return leaf;
+    }
+}
