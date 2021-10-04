@@ -1,0 +1,53 @@
+var app = ["app/documents/person","app/documents/rude","She.png"]
+var app2 =  [
+        "assets/css/custom.css",
+        "assets/css/default.css",
+        "assets/js/main.js",
+        “assest/js/js/mainer.js”
+        "assets/js/old/main-old.js"
+        "fonts/poppins.woff",
+        "favicon.ico",
+        "index.html",
+       
+]
+var app3 =  [
+        "assets/css/custom.css",
+        "assets/css/default.css",
+        "assets/js/main.js",
+        "assets/js/js/mainer.js",
+        "assets/js/old/main-old.js",
+        "fonts/poppins.woff",
+        "favicon.ico",
+        "index.html",
+       
+]
+//app: 0
+//app/documents : 1
+//app/documents/person : 2
+
+func printAbsoluteFilePath(_ arr : [String]) -> String{
+
+    var res = ""
+    var map = [String: Int]()
+
+
+    for str in arr{
+        let ary = str.components(separatedBy : "/")
+        var curr = ""
+        var count = 0
+        var space = ""
+        for w in ary{
+            curr.append(w)
+            curr.append("/")
+           if map[curr] == nil{
+               res.append("\(space)--\(w)\n")
+               map[curr] = count
+          }else if let val = map[curr]{
+               count = val
+          }
+         space.append("\t")
+        }
+    }
+
+    return res
+}
