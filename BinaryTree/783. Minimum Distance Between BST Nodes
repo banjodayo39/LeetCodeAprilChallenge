@@ -1,0 +1,34 @@
+class Solution {
+    var minN  = Int.max
+            var prev : Int?
+
+    func minDiffInBST(_ root: TreeNode?) -> Int {
+        
+        dfs(root)
+
+        return minN
+    }
+    
+    func dfs(_ node : TreeNode?){
+        
+        
+        guard var root = node else {
+            return
+        }
+        
+        
+        if let l = root.left{
+            dfs(l)
+        }
+        
+        if let p = prev{
+           minN = min(minN, root.val - p) 
+        }
+        prev = root.val
+        
+        if let r = root.right{
+            dfs(r)
+        }  
+        
+    }
+}
