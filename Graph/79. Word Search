@@ -1,0 +1,54 @@
+class Solution {
+    let dir = [[0,1], [1,0], [0, -1], [-1, 0]]
+    
+    func exist(_ board: [[Character]], _ word: String) -> Bool {
+        
+        let r = board.count
+        let c = board[0].count
+        
+        var chars = Array(word)
+        
+        for i in 0..<r{
+            for j in 0..<c{
+                var visited = Set<[Int]>()
+                
+                if board[i][j] == chars[0]{
+                    if checker(board, i, j, &visited, 0, chars){
+                        return true
+                    }
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    func checker(_ board : [[Character]], _ row: Int, _ col : Int, _ visited : inout Set<[Int]>, _ pos: Int, _ chars : [Character]) -> Bool{
+        
+        if pos == chars.count-1{
+            return true
+        }
+        
+        visited.insert([row, col])
+        
+                    // if nR < 0 && nR < board.count && nC >= 0 && nC < board[0].count && !visited.contains([nR, nC]){
+                    //     return false
+                    // }
+        
+        var ans = false
+        for d in dir{
+            let nR = row + d[0]
+            let nC = col + d[1]
+            
+            if nR >= 0 && nR < board.count && nC >= 0 && nC < board[0].count && !visited.contains([nR, nC]){
+                //print(chars[pos+1],  board[nR][nC] )
+                if board[nR][nC] == chars[pos+1] && checker(board, nR, nC, &visited, pos+1, chars){
+                    ans = true
+                } 
+            }
+        }
+        
+        visited.remove([row, col])
+        return ans
+    }
+}
