@@ -1,0 +1,30 @@
+class Solution {
+    func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+        let ans = dfs(coins, amount, 0, 0) 
+        
+        return ans == Int.max ? -1 : ans
+        
+    }
+    
+    func dfs(_ coins : [Int], _ a: Int,_ min: Int, _ index : Int)-> Int{
+        
+        if a == 0{
+            return 0
+        }
+        
+        var l = Int.max
+        
+        for i in 0..<coins.count{
+            if coins[i] <= a {
+              let ans =  dfs(coins, a-coins[i], min+1, index+1)  
+                
+              if ans != Int.max && ans + 1 < l{
+                  l = ans + 1
+              } 
+            }
+        }
+        
+        
+        return l
+    }
+}
