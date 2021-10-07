@@ -32,3 +32,36 @@ class Solution {
         
     }
 }
+
+class Solution {
+    var res = [Int]()
+    func getMinimumDifference(_ root: TreeNode?) -> Int {
+        guard let node = root else{
+            return 0
+        }
+        populateArray(node)
+        
+        print(res)
+        res.sort()
+        
+        var minNum = Int.max
+        
+        for i in 1..<res.count{
+            minNum = min(minNum, res[i]-res[i-1])
+        }
+        
+        return minNum
+    }
+    
+    func populateArray(_ root: TreeNode){
+        if let left = root.left{
+            populateArray(left)
+        }
+        
+        res.append(root.val)
+        
+        if let right = root.right{
+            populateArray(right)
+        }
+    }
+}
