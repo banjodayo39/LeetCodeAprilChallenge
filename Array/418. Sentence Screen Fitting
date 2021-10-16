@@ -1,0 +1,31 @@
+class Solution {
+    func wordsTyping(_ sentence: [String], _ rows: Int, _ cols: Int) -> Int {
+        var res = 0
+        var words = ""
+                
+        for w in sentence{
+            words.append(w)
+            words.append(" ")
+        }
+                
+        let chars = Array(words)
+        let total = chars.count
+        var index = 0
+        
+        for i in 0..<rows{
+            index += cols
+            
+            if chars[index%total] == " " {
+                index += 1
+            }else{
+                while index >= 0 && chars[index%total] != " "{
+                    index -= 1
+                }
+                index += 1
+            }
+        
+        }
+        
+        return index/total
+    }
+}
