@@ -1,0 +1,38 @@
+class Solution {
+    let dir = [[-1,0], [0, 1], [1, 0], [0, -1]]
+    
+    var robot : Robot!
+    
+    var visited = Set<[Int]>()
+    
+    func goBack(){
+        robot.turnRight()
+        robot.turnRight()
+        robot.move()
+        robot.turnLeft()
+        robot.turnLeft()
+    }
+    
+    func backTrack(_ r : Int, _ c: Int, _ d : Int){
+        visited.insert([r, c])
+        robot.clean()
+        
+        for i in 0..<4{
+            let nD = (d+i)%4
+            let nR = r + dir[nD][0]
+            let nC = c + dir[nD][1]
+            
+            if (!visited.contains([nR, nC]) && robot.move()){
+               // print(visited)
+                backTrack(nR, nC, nD)
+                goBack()
+            }
+            robot.turnRight()
+        }
+    }
+    
+    func cleanRoom(_ robot: Robot) {
+        self.robot  = robot
+        backTrack(0, 0, 0)
+    }
+}
