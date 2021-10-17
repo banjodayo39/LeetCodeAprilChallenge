@@ -1,0 +1,52 @@
+class Solution {
+    func minTransfers(_ transactions: [[Int]]) -> Int {
+        
+        var map = [Int: Int]()
+        
+        for t in transactions{
+            if let val  = map[t[0]]{
+                map[t[0]] = val - t[2]
+            }else{
+                map[t[0]]  = -t[2]
+            }
+            
+            if let val  = map[t[1]]{
+                map[t[1]] = val + t[2]
+            }else{
+                map[t[1]]  = t[2]
+            }            
+        }
+        
+        var arr = map.values.map{
+            $0
+        }
+        
+        
+        return dfs(&arr, 0)
+    }
+    
+    func dfs(_ arr : inout [Int], _ s : Int) -> Int{
+        
+        var st = s
+          if st == arr.count{
+            return 0
+        }
+        while st < arr.count && arr[st] == 0 {
+            return dfs(&arr, st+1)
+        }
+
+        
+        var step = 1000000
+            for i in st+1..<arr.count{
+                if arr[i] * arr[st] < 0{
+                    arr[i] = arr[i] + arr[s]
+                    step = min(step, 1+dfs(&arr, st+1))
+                    arr[i] = arr[i] - arr[st]
+                }   
+              } 
+       
+               // print(s, step)
+
+        return step
+    }
+}
