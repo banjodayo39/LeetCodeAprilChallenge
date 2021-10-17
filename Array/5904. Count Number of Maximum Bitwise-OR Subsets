@@ -1,0 +1,28 @@
+class Solution {
+    
+    
+    func countMaxOrSubsets(_ nums: [Int]) -> Int {
+        var d : [Int : Int] = [0:1]
+        
+        var mx = 0
+        
+        for num in nums{
+            var nd = d
+            
+            for x in d.keys{
+                if let val = nd[x|num]{
+                    nd[x|num] = val + d[x]!
+                }else{
+                    nd[x|num] = d[x]!
+                }
+                mx = max(x|num, mx)
+            }
+            
+            d = nd
+        }
+        
+        print(d)
+        
+        return d[mx]!
+    }
+}
