@@ -9,6 +9,7 @@
  * }
  */
 class Solution {
+//O(NLogN)
     func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
         
         var nodes = [Int]()
@@ -36,5 +37,53 @@ class Solution {
         
         return head?.next
         
+    }
+    
+    
+    func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+        
+        var c = lists.count
+        var interval = 1
+        var lists : [ListNode?] = lists
+        
+        while interval < c{
+            for i in stride(from: 0, to: c-interval, by: interval*2){
+                lists[i] = merge(lists[i], lists[i+interval])
+                //print(i, interval)
+            }
+            
+            interval *= 2
+        }
+        
+        return c > 0 ? lists[0] : nil
+    }
+    // time  O(Nlog k)
+    // space O(1)
+    func merge(_ n1 : ListNode?, _ n2: ListNode?) -> ListNode?{
+        var root : ListNode? = ListNode(-1)
+        
+        var m1 =  n1, m2 = n2
+        
+        var curr = root
+        while m1 != nil && m2 != nil{
+            if m1!.val  <= m2!.val{
+                curr?.next = m1
+                m1 = m1?.next
+            }else{
+                curr?.next = m2
+                m2 = m2?.next
+            }
+            curr = curr?.next
+        }
+        
+       if m1 != nil{
+           curr?.next = m1
+       }
+        
+        if m2 != nil{
+            curr?.next = m2
+        }
+        
+        return root?.next
     }
 }
