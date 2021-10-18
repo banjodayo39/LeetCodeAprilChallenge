@@ -1,0 +1,55 @@
+class Solution {
+    
+     var maxL =  1
+    var set = Set<String>() 
+     var map = [String: Int]()
+    func longestStrChain(_ words: [String]) -> Int {
+    
+        set = Set(words)
+        
+        for word in words{
+            if word.count == 1{
+                map[word] = 1
+            }else{
+              maxL = max(maxL, dfs(Array(word), word))
+            }
+            
+            
+        }
+         
+        
+        
+        return maxL
+        
+    }
+    
+    func dfs(_ chars : [Character], _ word: String)-> Int{
+ 
+        
+        if let val = map[String(chars)]{
+            return val
+        }
+        
+//         if chars.count == 1{
+            
+//              return 1
+//         }
+        
+        var count = 1
+        var chars_ = chars
+        for i in 0..<chars.count{
+            chars_.remove(at: i)
+            let newWord = String(chars_)
+            
+            if set.contains(newWord){
+               count = max(1+dfs(chars_, newWord), count)
+            }
+            chars_.insert(chars[i], at: i)
+        }
+        
+        map[word] = count
+        return count
+        
+        
+    }
+}
