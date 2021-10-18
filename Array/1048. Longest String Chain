@@ -53,3 +53,36 @@ class Solution {
         
     }
 }
+
+
+
+class Solution {
+    func longestStrChain(_ words: [String]) -> Int {
+        var map = [String: Int]()
+        
+        var words_ = words.sorted{
+            $0.count < $1.count
+        }
+        
+        var len = 1
+        
+        for word in words_{
+            
+            var p = 1
+            
+            for i in 0..<word.count{
+                var tmp = Array(word)
+                tmp.remove(at: i)
+                let newWord = String(tmp)
+                
+                if let val = map[newWord]{
+                    p = max(val+1, p)
+                }
+            }
+            map[word] = p
+            len = max(len, p)
+        }
+        
+        return len
+    }
+}
