@@ -1,29 +1,23 @@
 
 classSolution{
-        func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+         func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+        var dp = [Int](repeating: 10000, count: amount+1)
+        
+        dp[0] = 0
         
         if amount == 0{
             return 0
         }
-        let p = pow(2, 31)
-        let maxN = Int(NSDecimalNumber(decimal: p)) ?? 0
-        
-        var dp = [Int](repeating: maxN, count: amount+1)
-        dp[0] = 0
         
         for i in 1...amount{
-              for j in coins{
-                if j <= i{
-                    let currMin = dp[i-j]
-                     if currMin != maxN && currMin+1 < dp[i]{
-                         dp[i] = currMin+1
-                     }
+            for j in 0..<coins.count{
+                if coins[j] <= i{
+                    dp[i] = min(dp[i], dp[i-coins[j]]+1)
                 }
             }
         }
- 
-        return dp[amount] == maxN ? -1 : dp[amount]
         
+        return dp[amount] > amount ? -1 : dp[amount]
     }
 }
 class Solution {
