@@ -1,0 +1,27 @@
+class Solution {
+    func findRepeatedDnaSequences(_ s: String) -> [String] {
+        
+        var map = [String: Int]()
+        
+        var res = Set<String>()
+        
+        var l = 0 
+        
+        var chars = Array(s)
+        
+        var n = s.count
+        
+        while l + 10 <= n{
+            let ns = String(chars[l...l+9])
+            if let val = map[ns]{
+                map[ns] = val + 1
+                res.insert(ns)
+            }else{
+                map[ns] = 1
+            }
+            l += 1
+        }
+       
+        return Array(res)
+    }
+}
