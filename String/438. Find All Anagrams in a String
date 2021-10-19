@@ -1,0 +1,52 @@
+class Solution {
+    func findAnagrams(_ s: String, _ p: String) -> [Int] {
+        // s = "cbaebabacd", p = "abc"
+        //        | |
+        
+        
+        var  j = 0
+                
+        let n = s.count
+        var c = p.count
+        
+        if n < c{
+            return []
+        }
+        
+        let pD : [Character: Int] = Dictionary( p.map{($0, 1)} , uniquingKeysWith: +)
+        
+        var sD = [Character : Int]()
+        
+        var res = [Int]()
+        
+        var chars = Array(s)
+        
+        for i in 0..<n{
+            if pD[chars[i]] != nil{
+                if let val = sD[chars[i]]{
+                    sD[chars[i]] = val + 1
+                }else{
+                    sD[chars[i]] = 1
+                }
+            }
+            
+            if i >= c{
+                let k = chars[i-c]
+                if let val = sD[k]{
+                    if val == 1{
+                        sD.removeValue(forKey: k)
+                    }else{
+                        sD[k] = val - 1   
+                    }                    
+                }
+            }
+            
+            if sD == pD {
+                res.append(i-c+1)
+            }
+            
+        }
+        
+        return res
+    }
+}
