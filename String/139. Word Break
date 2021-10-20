@@ -1,4 +1,6 @@
 class Solution {
+
+    //Time complexity :  O(2 ^n)
     var set : Set<String>!
     
     func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
@@ -24,5 +26,31 @@ class Solution {
                  
         return false 
        
+    }
+    
+    
+    // Time compleity
+    
+     func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+        
+        let n = s.count
+        var dp = [Bool](repeating: false, count: n+1)
+        dp[0] = true
+        var set = Set(wordDict)
+        
+        let chars = Array(s)
+        
+        for i in 0...n{
+            for j in 0..<i{
+                if dp[j] && set.contains(String(chars[j..<i])){
+                    dp[i] = true
+                    break
+                }
+            }
+        }
+        
+        
+        return dp[n]
+        
     }
 }
