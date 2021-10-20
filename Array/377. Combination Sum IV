@@ -1,0 +1,29 @@
+class Solution {
+    var ans = 0
+    var memo =  [Int : Int]()
+    func combinationSum4(_ nums: [Int], _ target: Int) -> Int {
+        
+        return comb(nums, target)
+                
+    }
+    
+    func comb(_ nums: [Int] , _ target: Int) -> Int{
+      if target == 0{
+            return 1
+        }
+        if let val  = memo[target]{
+            return val
+        }
+        
+        var res = 0
+        for i in nums{
+            if target - i >= 0{
+               res += comb(nums, target - i) 
+            }
+            
+        }
+        
+        memo[target] = res
+        return res
+    }
+}
