@@ -1,0 +1,28 @@
+class Solution {
+    var set : Set<String>!
+    
+    func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+        
+        set = Set(wordDict)
+        var chars = Array(s)
+          
+        return dfs(chars, 0)
+    }
+    
+    
+    func dfs(_ w : [Character], _ st : Int) -> Bool{
+        //print("ended", st)
+         if w.count == st{
+             return true
+         }
+    
+        for i in st+1...w.count{
+            if (set.contains(String(w[st..<i])) && dfs(w, i)){
+                return true
+            }
+        }
+                 
+        return false 
+       
+    }
+}
