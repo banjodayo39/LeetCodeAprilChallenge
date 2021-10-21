@@ -1,0 +1,29 @@
+class Solution {
+    func cloneGraph(_ node: Node?) -> Node? {
+        guard var node = node else{
+            return nil
+        }
+        
+        var vs = [Node: Node]()
+        
+        var q = [Node]()
+        q.append(node)
+        
+        vs[node] = Node(node.val)
+        
+        while !q.isEmpty{
+            
+            let n = q.removeFirst()
+            
+            for n1 in n.neighbors{
+                if vs[n1!] == nil {
+                    vs[n1!] = Node(n1!.val)
+                    q.append(n1!)
+                }
+                vs[n]?.neighbors.append(vs[n1!]!)
+            }
+        }
+        
+        return vs[node]
+    }
+}
