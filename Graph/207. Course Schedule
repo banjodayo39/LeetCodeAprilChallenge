@@ -1,0 +1,55 @@
+class Solution {
+    
+    var map = [Int : [Int]]()
+    var visited = Set<Int>()
+    var memo = [Int: Bool]()
+
+    func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
+        
+        let n = numCourses
+        
+        for c in prerequisites{
+            if map[c[0]] != nil{
+                map[c[0]]?.append(c[1])
+            } else{
+                map[c[0]] = [c[1]]
+            }
+        }
+        
+        for i in 0..<n{
+           if !dfs(map, i){
+               return false
+           }   
+        }
+        
+        return true
+    }
+    
+    func dfs(_ map : [Int: [Int]], _ index : Int)-> Bool{
+        if visited.contains(index){
+            return false
+        }
+        
+        if let val = memo[index]{
+            return val
+        }
+        
+        visited.insert(index)
+        
+        var res = true
+        
+        if let list = map[index]{
+            
+            for i in list{
+                if !dfs(map, i){
+                   res = false 
+                }
+            }
+            
+        }
+        visited.remove(index)
+        
+        memo[index] = res
+        return res
+    }
+}
