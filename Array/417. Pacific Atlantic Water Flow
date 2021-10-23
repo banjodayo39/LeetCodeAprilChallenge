@@ -1,0 +1,56 @@
+class Solution {
+    var pEnabled = [[Int]]()
+    var aEnabled = [[Int]]()
+    
+    var pV = Set<[Int]>()
+    var aV = Set<[Int]>()
+    
+    var m = 0 
+    var n = 0
+    
+    func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
+        
+        m = heights.count
+        n = heights[0].count
+        
+        var res = [[Int]]()
+        
+        // loop thru the top to check
+        for i in 0..<n{
+            dfs(0, i, heights[0][i], heights, &pV)
+            dfs(m-1, i, heights[m-1][i],heights, &aV)
+        }
+        
+        //loop thru the left to check 
+         for i in 0..<m{
+            dfs(i, 0, heights[i][0],heights, &pV)
+            dfs(i, n-1, heights[i][n-1],heights, &aV)
+         }
+        
+         for i in 0..<m{
+             for j in 0..<n{
+                 if pV.contains([i,j]) && aV.contains([i,j]){
+                     res.append([i, j])
+                 }
+             }
+         }
+          
+         return res 
+        
+        //
+    }
+    
+    
+    func dfs(_ r: Int, _ c : Int, _ prev : Int, _ heights : [[Int]], _ set : inout Set<[Int]>){
+        if r < 0 || r >= m || c < 0 || c >= n || prev > heights[r][c] || set.contains([r, c]){
+            return
+        }  
+        set.insert([r,c])
+        
+        dfs(r, c+1, heights[r][c],heights, &set)
+        dfs(r+1, c, heights[r][c],heights, &set)
+        dfs(r-1, c, heights[r][c],heights, &set)
+        dfs(r, c-1, heights[r][c], heights, &set)        
+        
+    }
+}
