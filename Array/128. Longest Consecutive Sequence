@@ -1,0 +1,23 @@
+class Solution {
+    func longestConsecutive(_ nums: [Int]) -> Int {
+        
+        var set = Set(nums)
+        
+        var res = 0
+        
+        for i in nums{
+            if !set.contains(i-1){
+                var ans = 1
+                var curr = i+1
+                while set.contains(curr){
+                    ans += 1
+                    curr += 1
+                }
+                res = max(res, ans)
+            }
+        }
+        
+        
+        return res 
+    }
+}
