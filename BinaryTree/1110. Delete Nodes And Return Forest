@@ -1,0 +1,48 @@
+class Solution {
+    
+    var set = Set<Int>()
+    var res = [TreeNode?]()
+    
+    func delNodes(_ root: TreeNode?, _ to_delete: [Int]) -> [TreeNode?] {
+        
+        set = Set(to_delete)
+        
+        guard var r = root else{
+            return []
+        }
+        
+        deleNode(r)
+        if !set.contains(r.val){
+            res.append(r)
+        }
+        
+        
+        
+        return res
+    }
+    
+    func deleNode(_ node : TreeNode?) -> TreeNode?{
+         
+        guard var node = node else{
+            return nil
+        }
+        
+        node.left = deleNode(node.left)
+        node.right = deleNode(node.right)
+        
+        if set.contains(node.val){
+            if let l = node.left{
+                res.append(l)
+            }
+            
+            if let r = node.right{
+                res.append(r)
+            }
+            
+            return nil
+        }
+        
+        return node
+        
+    }
+}
