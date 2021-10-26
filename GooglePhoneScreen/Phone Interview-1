@@ -1,0 +1,36 @@
+
+func midOfArray(_ arr: [Int]) -> Int{
+  
+   let csum = arr.reduce(0, +)
+   let mid = csum/2
+   var rsum = 0
+  
+    let n = arr.count
+  
+    for i in 0..<n{
+       rsum += arr[i]
+       if rsum == mid{
+           return i
+       }
+    }
+  
+    return -1
+}
+
+func powerset(_ arr : [Int]) -> [[Int]]{
+  
+    var res = [[Int]]()
+  
+    let n = arr.count
+    res = [[]]
+     //0..<3
+    for i in 0..<n{
+       let c = res.count
+       for j in 0..<c{
+           var ans = res[j]
+           ans.append(arr[i])
+           res.append(ans)  // res [[], [1], [2], [12], [3],[ [1, 3], [2,3], [1, 2, 3]]
+       }
+    }
+    return res
+}
