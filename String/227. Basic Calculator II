@@ -1,0 +1,40 @@
+class Solution {
+    func calculate(_ s: String) -> Int {
+         if s.isEmpty{
+             return 0
+         }
+        
+         var curr = 0, lastN = 0 , res = 0
+         var op  : Character = "+"
+         
+         let n = s.count
+         
+        var chars = Array(s)
+         
+         for i in 0..<n
+        {
+             var ch = chars[i]
+            //"3+2*2" 
+            if let val = Int(String(chars[i])){
+                curr = curr*10+val
+            }
+            
+            if Int(String(chars[i])) == nil && ch != Character(" ") || i == n-1{
+                if op == "+" || op == "-"{
+                    res += lastN
+                    lastN = op == "+" ? curr : -curr
+                } else if op == "*"{
+                    lastN = lastN * curr
+                } else if op == "/"{
+                    lastN = lastN/curr
+                }
+                op = ch
+                curr = 0
+            }
+         }
+         
+        res += lastN
+        return res
+        
+    }
+}
