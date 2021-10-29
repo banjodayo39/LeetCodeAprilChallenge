@@ -25,4 +25,50 @@ class Solution {
         
         return maxCount
     }
+    
+    
+     func totalFruit(_ fruits: [Int]) -> Int {
+        
+        var maxN = 0
+        var currMax = 1
+        
+         if fruits.count == 1{
+            return 1
+        }
+        
+        var d = [Int: Int]()
+        var lastN = fruits[0]
+        var lastNIndex = 0
+        var set : Set<Int> = [fruits[0]]
+        
+       
+        
+        for i in 1..<fruits.count{
+            set.insert(fruits[i])
+            
+             if lastN == fruits[i]{
+                currMax += 1
+                 maxN = max(currMax, maxN)
+             }else{
+                 
+                 if set.count > 2{
+                    // print("Exceed", i, lastNIndex)
+                     set = [lastN, fruits[i]]
+                     currMax = (i-lastNIndex)+1
+                    
+                }else{
+                    currMax += 1
+                 }
+                 //print(set,lastN, lastNIndex,i,"\(i-lastNIndex)", currMax)
+                 lastN = fruits[i]
+                 lastNIndex = i
+                 maxN = max(maxN, currMax)
+             }
+          
+        }
+        
+        
+        return maxN
+        
+    }
 }
