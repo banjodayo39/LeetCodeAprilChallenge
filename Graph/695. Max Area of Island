@@ -1,0 +1,34 @@
+class Solution {
+    
+    var visited = Set<[Int]>()
+        
+    func maxAreaOfIsland(_ grid: [[Int]]) -> Int {
+        
+        var ans = 0 
+        let r = grid.count
+        let c = grid[0].count
+        
+        for i in 0..<r{
+            for j in 0..<c{
+                if !visited.contains([i, j]){
+                    let s = dfs(grid, i, j)
+                    //print(s, grid[i][j])
+                    ans = max(ans, s)
+                }
+            }
+        }
+        return ans
+    }
+    
+    
+    func dfs(_ grid : [[Int]], _ r : Int, _ c : Int) ->  Int{
+        if r < 0 || r >= grid.count || c < 0  || c >= grid[0].count || grid[r][c] == 0 || visited.contains([r,c]){
+             return 0
+        }
+        
+        visited.insert([r,c])
+        let total  = 1 + dfs(grid, r-1, c) + dfs(grid, r, c-1) + dfs(grid, r+1, c) +  dfs(grid, r, c+1)
+        
+        return total 
+    }
+}
