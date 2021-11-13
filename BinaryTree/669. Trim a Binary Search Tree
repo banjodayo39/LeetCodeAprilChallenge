@@ -1,0 +1,27 @@
+class Solution {
+    func trimBST(_ root: TreeNode?, _ low: Int, _ high: Int) -> TreeNode? {
+        
+       var node = root
+       return trimTree(&node, low, high)
+    }
+    
+    func trimTree(_ root : inout TreeNode?, _ low: Int, _ high: Int) -> TreeNode?{
+        guard var node = root else{
+            return nil
+        }
+        
+        if node.val > high {
+            return trimTree(&node.left, low, high)
+        }
+        
+        if node.val < low{
+            return trimTree(&node.right, low, high)
+        }
+        
+        node.left = trimTree(&node.left, low, high)
+        node.right = trimTree(&node.right, low, high)
+        
+        return node
+    }
+ 
+}
