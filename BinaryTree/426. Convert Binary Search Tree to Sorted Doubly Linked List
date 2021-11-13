@@ -1,0 +1,35 @@
+class Solution {
+    
+    var last : Node? = nil
+    var first : Node? = nil
+    
+    func treeToDoublyList(_ root: Node?) -> Node? {
+        
+        toDL(root)
+        
+        first?.left = last
+        last?.right = first
+        
+        return first
+    }
+    
+    func toDL(_ node: Node?){
+        
+        guard var node = node else{
+            return
+        }
+        
+        toDL(node.left)
+        
+        if last != nil{
+            node.left = last
+            last?.right = node
+        }
+        if first == nil{
+            first = node
+        }
+        last = node
+        
+        toDL(node.right)
+    }
+}
