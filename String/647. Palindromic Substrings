@@ -1,0 +1,41 @@
+class Solution {
+    
+    var res = 0
+
+    
+    func countSubstrings(_ s: String) -> Int {
+        
+        var chars = Array(s)
+        
+        for i in 0..<s.count{
+           var l = i
+            var r = i
+            
+            res += expand(chars, &l, &r)
+            l = i
+            r = i+1
+            res += expand(chars, &l, &r)
+        }
+        
+        return res
+    }
+    
+    func expand(_ chars : [Character], _ l : inout  Int, _ r : inout Int) -> Int{
+        
+        if chars.count < 1{
+            return 0
+        }
+        var ans = 0
+        while l >= 0 && r < chars.count && chars[l] == chars[r]{
+            
+            l -= 1
+            r += 1
+            ans += 1
+        }
+        
+        return ans
+        
+        
+    }
+
+}
