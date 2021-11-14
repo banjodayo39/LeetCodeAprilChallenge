@@ -1,0 +1,53 @@
+class Solution {
+    
+    var s = [Int]()
+    var g = [Int: [Int]]()
+    var color = [Int: Int]() // value of 1  - unvisited,   2 - visiting , 3 - visited
+    
+    var order = [Int]()
+
+    
+    func findOrder(_ numCourses: Int, _ prerequisites: [[Int]]) -> [Int] {
+        color = Dictionary(uniqueKeysWithValues: (0..<numCourses).map{($0, 1)})
+
+        // build adjacent courses 
+        for r in prerequisites{
+            if g[r[0]] == nil{
+                g[r[0]] = [r[1]]
+            }else{
+                g[r[0]]?.append(r[1])
+            }
+        }
+        
+        for c in 0..<numCourses{
+            if !dfs(c){
+                return []
+            }
+        }
+        
+        
+        return order
+    }
+    
+    func dfs(_ cos:Int) -> Bool{
+        
+        if color[cos]! == 2{
+            return false
+        }else if color[cos]! == 3 {
+            return true
+        }
+        
+        color[cos] = 2
+        
+        if let l = g[cos]{
+            for p in l{
+                if !dfs(p){
+                    return false
+                }
+            }
+        }
+        color[cos] = 3
+        order.append(cos)
+        return true
+    }
+}
