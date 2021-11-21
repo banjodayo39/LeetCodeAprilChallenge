@@ -1,0 +1,54 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init() { self.val = 0; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+ *     public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+ *         self.val = val
+ *         self.left = left
+ *         self.right = right
+ *     }
+ * }
+ */
+class Solution {
+    func buildTree(_ inorder: [Int], _ postorder: [Int]) -> TreeNode? {
+        let n = inorder.count
+        
+        if n==0{
+            return nil
+        }
+        var inOrd = inorder
+        var postOrd = postorder
+        
+        return buldTreeDfs(&inOrd, 0, n, &postOrd, 0, n)
+    }
+    
+    func buldTreeDfs(_ inorder: inout [Int], _ l1: Int, _ l2: Int,  _ postorder : inout [Int], _ p1: Int, _ p2: Int) -> TreeNode?{
+        
+        if l1 >= l2 || p1 >= p2{
+            return nil
+        }
+        
+        
+        var root = TreeNode(postorder[p2-1])
+        var it = 0
+        
+        for i in l1..<l2{
+            if postorder[p2-1] == inorder[i]{
+                it = i
+                break 
+            }
+        }
+        
+        let diff = it - l1
+        root.left =  buldTreeDfs(&inorder, l1, l1 + diff, &postorder, p1, p1+diff)
+        root.right  = buldTreeDfs(&inorder, l1+diff+1, l2, &postorder, p1+diff, p2-1)
+        
+        return root 
+        
+        
+    }
+}
