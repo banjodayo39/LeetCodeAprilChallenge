@@ -1,0 +1,25 @@
+class Solution {
+    func countSquares(_ matrix: [[Int]]) -> Int {
+        var memo = Array(repeating: Array(repeating: 0, count: matrix[0].count), count: matrix.count)
+        var ans = 0
+     
+        
+        for i in 0..<matrix.count{
+            for j in 0..<matrix[0].count{
+                
+                if i == 0 || j == 0{
+                    memo[i][j] = matrix[i][j]
+
+                }else{
+                    if matrix[i][j] == 1{
+                        memo[i][j] = 1 + min(memo[i][j-1], min(memo[i-1][j-1], memo[i-1][j]))
+                    }
+                }
+                ans += memo[i][j]  
+            }
+        }
+        
+        return ans
+    }
+
+}
