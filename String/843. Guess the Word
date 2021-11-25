@@ -1,0 +1,48 @@
+class Solution {
+    func findSecretWord(_ wordlist: [String], _ master: Master) {
+        
+        var words = wordlist.sorted()
+        
+        while !words.isEmpty{
+            let guessWord = words[0]
+            
+            let firstMatchCount = master.guess(guessWord)
+            
+            if firstMatchCount == guessWord.count{
+                return 
+            } 
+            
+            words = words.filter{
+                matchCount(Array(guessWord), Array($0)) == firstMatchCount
+            }
+            
+            let lastGuessWord = words.last!
+            
+            let lastMatchCount = master.guess(lastGuessWord)
+            
+            if lastMatchCount == lastGuessWord.count{
+                return 
+            } 
+            
+            words = words.filter{
+                matchCount(Array(lastGuessWord), Array($0)) == lastMatchCount
+            }
+            
+        }
+        
+    }
+    
+    func matchCount(_ target : [Character], _ guess: [Character])-> Int{
+        let size = min(target.count, guess.count)
+        
+        var num = 0
+        
+        for i in 0..<size{
+            if guess[i] == target[i]{
+                num += 1
+            }
+        }
+        
+        return num
+    }
+}
