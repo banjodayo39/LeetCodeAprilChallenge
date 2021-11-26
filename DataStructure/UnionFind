@@ -1,0 +1,33 @@
+class UnionFind{
+    
+    var root = [Int]()
+    
+    init(_ size : Int){
+        root = [Int](repeating: 0, count:size)
+        (0..<size).map{
+            root[$0] = $0
+        }
+    }
+    
+    func find(_ x : Int) -> Int{
+        return root[x]
+    }
+    
+    func union(_ x : Int, _ y : Int){
+        var rootX = find(x)
+        var rootY = find(y)
+        
+        if rootX != rootY{
+            for i in 0..<root{
+                if root[i] == rootY{
+                    root[i] = rootX
+                }
+            }
+        }
+    }
+    
+    func connected(_ x: Int, _ y : Int) -> Bool{
+        return find[x] == find[y]
+    }
+    
+}
