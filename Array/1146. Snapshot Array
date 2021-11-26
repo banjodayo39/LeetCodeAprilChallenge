@@ -1,0 +1,56 @@
+class SnapshotArray {
+
+    var array : [[(Int, Int)]]
+    var len = 0
+    var snapId = 0
+    
+    /*
+    [[(0, 0)], [(0, 0)], [(0, 0)]]
+[[(0, 0), (5, 0)], [(0, 0)], [(0, 0)]]
+[[(0, 0), (5, 0), (6, 1)], [(0, 0)], [(0, 0)]]
+*/
+    
+    init(_ length: Int) {
+        self.array = Array(repeating: [(0,0)] , count : length)
+        self.snapId = 0
+        self.len = length
+    }
+    
+    func set(_ index: Int, _ val: Int) {
+        array[index].append((val, snapId))
+        
+    }
+    
+    func snap() -> Int {
+        snapId += 1
+        return snapId - 1
+    }
+    
+    func get(_ index: Int, _ snap_id: Int) -> Int {
+        let snaplist = self.array[index]
+    
+    //list of tuples (val,snap_id)
+    
+         var start = 0 
+        var end = snaplist.count-1
+    
+    while start <= end{
+        let mid = start + (end-start)/2
+        
+        if snaplist[mid].1 > snap_id{
+            end = mid - 1
+        } else{
+            start = mid + 1
+        }   
+    }
+        return snaplist[end].0
+    }
+}
+
+/**
+ * Your SnapshotArray object will be instantiated and called as such:
+ * let obj = SnapshotArray(length)
+ * obj.set(index, val)
+ * let ret_2: Int = obj.snap()
+ * let ret_3: Int = obj.get(index, snap_id)
+ */
