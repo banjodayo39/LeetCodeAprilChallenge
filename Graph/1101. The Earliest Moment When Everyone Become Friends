@@ -1,0 +1,66 @@
+class Solution {
+    
+    var res = 0
+    var set = Set<Int>()
+    
+    func findCircleNum(_ isConnected: [[Int]]) -> Int {
+        
+        for i in 0..<isConnected.count{
+            if !set.contains(i){
+                dfs(i, isConnected)
+                res += 1
+            }
+        }
+         
+        
+        return res
+    }
+    
+    func dfs(_ num : Int, _ isConnected : [[Int]]){
+        
+        set.insert(num)
+        
+        for j in 0..<isConnected.count{
+            if !set.contains(j) && isConnected[num][j] == 1{
+                dfs(j , isConnected)
+            }
+        }
+    }
+}
+
+class UnionFind{
+    
+    var root : [Int]
+    var len : Int
+    
+    init(_ n : Int){
+        root = [Int]()
+        len = n
+
+        (0..<n).map{
+            root.append($0)
+        }
+    }
+    
+    
+    func find(_  i : Int) -> Int{
+        if i == root[i]{
+            return i 
+        }
+        
+        root[i] = find(root[i])
+        return root[i]
+    }
+    
+    
+    func union(_ i : Int, _ j : Int){
+        let rootX = root[i]
+        let rootY = root[j]
+        
+        if rootX != rootY{
+            root[j] = find(i)
+            len -= 1
+        }
+    }
+    
+}
