@@ -65,7 +65,7 @@ class UnionFind{
         var rootY = find(y)
         
         if rootX != rootY{
-            root[y] = find(x)
+            root[rootY] = find(x)
         }
     }
 }
