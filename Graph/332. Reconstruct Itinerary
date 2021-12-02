@@ -1,0 +1,46 @@
+class Solution {
+    
+    var map = [String : [String]]()
+    var res = [String]()
+    var stack = [String]()
+
+
+    func findItinerary(_ tickets: [[String]]) -> [String] {
+        
+        for ticket in tickets{
+            if map[ticket[0]] == nil {
+                map[ticket[0]] = []
+            }
+            map[ticket[0]]?.append(ticket[1])
+            // if map[ticket[1]] == nil{
+            //     map[ticket[1]] = []
+            // }
+        }
+        
+        for (k, _) in map{
+            map[k]?.sort{$0>$1}
+        }
+        
+        print(map)  
+        stack.append("JFK")
+        
+        while !stack.isEmpty{
+            
+            let str = stack[stack.count-1]
+            if map[str] != nil{
+                   if map[str]!.isEmpty{
+                res.append(str)
+                stack.removeLast()
+            } else{
+                let dst = map[str]!.removeLast()
+                stack.append(dst)
+            }
+            } else{
+                res.append(stack.removeLast())
+            }
+        }
+        
+        return res.reversed()
+    }
+
+} 
