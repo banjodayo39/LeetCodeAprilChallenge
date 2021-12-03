@@ -1,0 +1,35 @@
+class Solution {
+    func validSquare(_ p1: [Int], _ p2: [Int], _ p3: [Int], _ p4: [Int]) -> Bool {
+        
+        var map = [Int : Int]()
+        let arr = [p1, p2, p3, p4]
+        //space max map = 4*4 = 16
+        //time 16 
+        for i in 0..<arr.count{
+            for j in 0..<arr.count{
+                if i != j{
+                    let dist = distanceBtwPoints(arr[i], arr[j])
+                    if map[dist] == nil{
+                        map[dist] = 0
+                    }
+                    map[dist] = map[dist]! + 1
+                }
+            }
+            
+            if map.count > 2 {
+                return false
+            }
+        }
+        
+        let a = map.keys.min()!
+        let b = map.keys.max()!
+        
+        return map.count == 2  && a*2 == b 
+        
+    } 
+    
+    func distanceBtwPoints(_ p1: [Int], _ p2: [Int]) -> Int{
+        
+         return (p2[0]-p1[0]) * (p2[0]-p1[0]) + (p2[1]-p1[1]) * (p2[1]-p1[1])
+    }
+}
