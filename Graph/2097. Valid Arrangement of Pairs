@@ -1,0 +1,56 @@
+class Solution {
+    //https://leetcode.com/contest/weekly-contest-270/problems/valid-arrangement-of-pairs/
+    var adj = [Int: [Int]]()
+    var res = [[Int]]()
+    
+    func validArrangement(_ pairs: [[Int]]) -> [[Int]] {
+        
+        var indegree = [Int: Int]()
+        
+        for pair in pairs{
+            
+            if adj[pair[0]] == nil{
+                adj[pair[0]] = []
+            }
+            
+            adj[pair[0]]?.append(pair[1])
+            
+            if let val = indegree[pair[0]]{
+                indegree[pair[0]] = val+1
+            } else {
+                indegree[pair[0]] = 1
+            }
+            
+            if let val = indegree[pair[1]]{
+                indegree[pair[1]] = val-1
+            } else {
+                indegree[pair[1]] = -1
+            }
+        }
+        
+        var start = -1
+        
+        for (k,v) in indegree{
+            if v > 0{
+                start = k
+                break
+            }
+        }
+        
+        if start == -1 {
+            start = pairs[0][0]
+        }
+        
+        dfs(start)
+        
+        return res.reversed()
+    }
+    
+    func dfs(_ i : Int){
+        while (adj[i] ?? []).count > 0{
+             let next = adj[i]!.removeLast()
+             dfs(next)
+            res.append([i, next])
+        }
+    }
+}
