@@ -1,0 +1,50 @@
+class Solution {
+     
+    func kClosest(_ points: [[Int]], _ k: Int) -> [[Int]] {
+                
+        var arr = [[Int]]()
+        var res = [[Int]]()
+        
+        for (i, point) in points.enumerated(){
+            let d = distance(point, [0,0])
+            insertEle(&arr, k, [d, i])
+        }
+        
+        for val in arr{
+            res.append(points[val[1]])
+        }
+        
+        return res
+    }
+    
+    func insertEle(_ arr: inout [[Int]], _ k : Int, _ p : [Int]){
+        
+        var l = 0
+        var r = arr.count-1
+        
+        while l <= r {
+            let mid = l + (r-l)/2
+            
+            if arr[mid][0] == p[0] {
+                l = mid
+                break
+            }else if arr[mid][0] > p[0]{
+                r = mid-1
+            }else{
+                l = mid+1
+            }
+        }
+        
+        arr.insert(p, at: l)
+        
+        if arr.count > k{
+            arr.removeLast()
+        }
+        
+    }
+    
+    
+    func distance(_ arr1 : [Int], _ arr2: [Int]) -> Int{
+        return ((arr1[0] - arr2[0]) * (arr1[0] - arr2[0]) + (arr1[1] - arr2[1]) * (arr1[1] - arr2[1]))
+    }
+}
