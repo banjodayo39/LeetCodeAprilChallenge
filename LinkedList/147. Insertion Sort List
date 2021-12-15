@@ -1,0 +1,23 @@
+class Solution {
+    func insertionSortList(_ head: ListNode?) -> ListNode? {
+        
+        var curr = head
+        var dummy : ListNode? = ListNode(6000)
+        
+        while curr != nil {
+            var temp = dummy 
+            while temp?.next != nil && temp?.next?.val ?? 0 < curr!.val{
+               temp = temp?.next
+            }
+            let next = temp?.next
+            let currnext = curr?.next
+            temp?.next = curr 
+            curr?.next = next
+            curr = currnext
+        }
+
+        
+        return dummy?.next
+        
+    }
+}
