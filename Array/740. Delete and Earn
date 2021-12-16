@@ -1,0 +1,27 @@
+class Solution {
+ 
+    func deleteAndEarn(_ nums: [Int]) -> Int {
+        
+        var sortedNums = Array(Set(nums)).sorted()
+        let dict = Dictionary(nums.map{($0, 1)}, uniquingKeysWith: +)
+        
+        
+        var e1  = 0, e2 = 0
+        
+        for i in 0..<sortedNums.count{
+            let currEarn = sortedNums[i] * dict[sortedNums[i]]!
+            let t  = e2
+
+            if i > 0 && sortedNums[i] == sortedNums[i-1]+1{
+                e2 = max(e1 + currEarn, e2)
+                e1 = t
+                
+            }else{
+                e2 = currEarn + e2
+                e1 = t
+            }
+        }
+                
+        return e2
+    }
+}
