@@ -1,0 +1,80 @@
+class Solution {
+    func numIslands2(_ m: Int, _ n: Int, _ positions: [[Int]]) -> [Int] {
+        
+        let total = m*n
+        
+        var uf = UnionFind(total)
+        var matrix = Array(repeating: Array(repeating: 0, count: n), count: m)
+        
+        var ans : [Int] = []
+        var island = 0
+        
+        for pos in positions{
+            let i = pos[0]
+            let j = pos[1]
+            
+            if matrix[i][j] == 0{
+                matrix[i][j] = 1
+                island += 1
+            }
+            
+            for (r, c) in [(i+1,j),(i-1,j),(i,j+1),(i,j-1)]{
+                if r < 0 || c < 0 || r >= m || c >= n{
+                    continue
+                }
+                if matrix[r][c]==1{
+                    if uf.union(r*n+c, i*n+j){
+                        island -= 1
+                    }
+                }
+            }
+            ans.append(island)
+        }
+        
+        return ans
+    }
+    
+
+}
+
+
+class UnionFind{
+    
+    var parent : [Int] = []
+    var rank : [Int] = []
+    
+    init(_ count: Int){
+        (0..<count).map{
+            parent.append($0)
+            rank.append(1)
+        }
+    }
+    
+    
+    func find(_ x : Int) -> Int{
+        if parent[x] != x{
+            parent[x] = find(parent[x])
+        }
+        return parent[x]
+    }
+    
+    func union(_ x : Int, _ y : Int) -> Bool{
+        let parentX = find(x)
+        let parentY = find(y)
+        
+        if parentX != parentY{
+            if rank[parentX] < rank[parentY]{
+                parent[parentX] = parentY
+            } else if parent[parentX] > parent[parentY]{
+                parent[parentY] = parentX
+            } else{
+                parent[parentY] = parentX
+                rank[parentX] += 1
+            }
+            return true
+        }
+        
+        return false
+    }
+    
+}
