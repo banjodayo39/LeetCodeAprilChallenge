@@ -1,0 +1,44 @@
+class Solution {
+    
+    /**        
+    9 -> 8       1, 1    2, 3         7
+    visited : [[0,0], ]
+    curr   1
+    path    3
+    n ^ 2
+    */
+    
+    var path = 0
+    var visited = Set<[Int]>()
+    
+    func getMaximumGold(_ grid: [[Int]]) -> Int {
+        
+        for i in 0..<grid.count{
+            for j in 0..<grid[0].count{
+                visited = Set<[Int]>()
+                 if grid[i][j] != 0{
+                     dfs(grid, i , j, &visited, 0)
+                 }
+            }
+        }
+        
+        return path
+    }
+        
+    
+     func dfs( _ grid: [[Int]], _  r : Int, _ c: Int, _ visited: inout Set<[Int]>, _ sum : Int){
+         if r < 0 || c < 0 || r >= grid.count || c >= grid[0].count || grid[r][c] == 0 || visited.contains([r, c]){
+             return 
+         }
+          
+         visited.insert([r, c])
+         
+         path = max(path, sum+grid[r][c])
+         
+         dfs(grid, r+1, c, &visited, sum+grid[r][c])
+         dfs(grid, r-1, c, &visited, sum+grid[r][c])
+         dfs(grid, r, c+1, &visited, sum+grid[r][c])
+         dfs(grid, r, c-1, &visited, sum+grid[r][c])
+         visited.remove([r, c])
+     }    
+}
