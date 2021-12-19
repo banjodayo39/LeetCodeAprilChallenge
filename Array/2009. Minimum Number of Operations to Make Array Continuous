@@ -1,0 +1,27 @@
+class Solution {
+    func minOperations(_ nums: [Int]) -> Int {
+        
+        let length = nums.count
+                                              
+        let nums = Set(nums).sorted()
+         
+         
+        var end = 0
+         
+         var maxVal = Int.min
+    
+                                              
+        for i in 0..<nums.count{
+            while end < nums.count && nums[end] < nums[i]+length{
+                end += 1
+            }
+            
+            maxVal = max(maxVal, end-i)
+        }
+           
+        print(maxVal)
+                                            
+        return length-maxVal
+        
+    }
+}
