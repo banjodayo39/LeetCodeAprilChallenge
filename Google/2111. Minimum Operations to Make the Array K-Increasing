@@ -1,0 +1,59 @@
+class Solution {
+  
+    func kIncreasing(_ arr: [Int], _ k: Int) -> Int {
+        var p = Array(repeating: [Int](), count: k)
+        var res = 0
+        
+        for (i, c) in arr.enumerated(){
+            p[i%k].append(c)
+        }
+        
+        for i in 0..<k{
+            res += check(p[i])
+        }
+        
+        return res
+    }
+    
+    func check(_ nums: [Int]) -> Int{
+       let n = nums.count
+        var best = [Int]()
+        
+        for i in nums{
+            let index = bisect(best, i+1)
+            
+            if index >= best.count{
+                best.append(i)
+            }else{
+                best[index] = i
+            }
+        }
+        
+        return nums.count - best.count
+    }
+    
+    func bisect(_ arr : [Int], _ val : Int)-> Int{
+        
+        if arr.isEmpty{
+            return 0
+        }
+        
+        var l = 0
+        var r = arr.count-1
+        
+        while l <= r{
+            let mid = l + (r-l)/2
+            
+            if arr[mid] == val{
+                return mid
+            }else if arr[mid] < val{
+                l = mid+1
+            }else{
+                r = mid-1
+            }
+        }
+        
+        return l
+        
+    }
+}
