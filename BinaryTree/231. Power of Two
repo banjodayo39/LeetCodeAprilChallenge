@@ -1,0 +1,11 @@
+class Solution {
+    func isPowerOfTwo(_ n: Int) -> Bool {
+        
+        if n == 0{
+            return false
+        }
+        let logVal = log2(Double(n))
+        
+        return ceil(logVal) == floor(logVal)
+    }
+}
