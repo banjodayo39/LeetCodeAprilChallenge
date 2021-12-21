@@ -1,0 +1,52 @@
+class Solution {
+    
+    var dict = [Int: Int]()
+    var maxVal = 0
+    var n = 0
+    
+    func countHighestScoreNodes(_ parents: [Int]) -> Int {
+        
+        if parents.isEmpty{
+            return 0
+        }
+        
+        n = parents.count
+        var tree  :  [Int: [Int]] = Dictionary(uniqueKeysWithValues: (0..<n).map{($0, [])})
+        
+        for i in 0..<parents.count{
+            tree[parents[i]]?.append(i)
+        }
+        
+        dfs(tree, 0)
+        
+        var occurence = 0
+        
+        for i in dict.values{
+            occurence += i == maxVal ? 1: 0
+        }
+        
+        return occurence
+        
+    }
+    
+    func dfs(_  tree: [Int: [Int]], _ s: Int) -> Int{
+         
+        var size = 1
+        var product = 1
+        
+        for i in tree[s] ?? []{
+            let count = dfs(tree, i)
+            product *= count
+            size += count
+        }
+    
+        if n - size > 0{
+            product *= (n-size)
+        }
+        
+        dict[s] = product
+        maxVal = max(maxVal, product)
+    
+        return size
+    }
+}
