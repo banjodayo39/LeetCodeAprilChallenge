@@ -1,0 +1,19 @@
+class Solution {
+    func merge(_ intervals: [[Int]]) -> [[Int]] {
+        
+        var intervals = intervals.sorted{$0[0] < $1[0]}
+        
+        var newIntervals = [intervals[0]]
+        
+        for interval in intervals{
+            if newIntervals[newIntervals.count-1][1] >= interval[0]{
+                newIntervals[newIntervals.count-1][1] = max(newIntervals[newIntervals.count-1][1], interval[1])
+            } else{
+                newIntervals.append(interval)
+            }
+        }
+        
+        
+        return newIntervals
+    }
+}
