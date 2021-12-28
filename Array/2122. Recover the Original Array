@@ -1,0 +1,41 @@
+class Solution {
+    func recoverArray(_ nums: [Int]) -> [Int] {
+        
+        var arr = nums.sorted()
+        
+        var diff = [Int]()
+        
+        for num in nums{
+            let temp = num - arr[0]
+            
+            if temp > 0 && temp%2 == 0{
+                diff.append(temp)
+            }
+        }
+        
+        for num in diff{
+            let  newArr = checkDiff(arr, num)
+            if newArr.count==arr.count/2{
+                return newArr
+            }
+        }
+        
+        return []
+    }
+    
+    func checkDiff(_ arr: [Int],  _ diff: Int) -> [Int]{
+        
+        var freq = Dictionary(arr.map{($0, 1)}, uniquingKeysWith: +)
+        var ans = [Int]()
+        
+        for num in arr{
+            if freq[num]! > 0 && freq[num+diff] != nil && freq[num+diff]! > 0{
+                ans.append(num+diff/2)
+                freq[num] = freq[num]!-1
+                freq[num+diff] = freq[num+diff]!-1
+            } 
+        }
+        
+        return ans
+    }
+}
