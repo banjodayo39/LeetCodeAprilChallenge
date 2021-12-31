@@ -1,0 +1,33 @@
+class Solution {
+    var result = [[Int]]()
+    var arr = [Int]()
+    var n = 0
+    
+    func combine(_ n: Int, _ k: Int) -> [[Int]] {
+        self.n = n
+        
+        var path = [Int]()
+        dfs(1, k, &path)
+        
+        return result
+    }
+    
+    func dfs(_ index: Int, _ k : Int, _ path: inout [Int]){
+        
+        if path.count == k{
+            result.append(path)
+            return
+        }
+         
+        if index <= n{
+            for i in index...n{
+                path.append(i)
+                dfs(i+1, k, &path)
+                path.popLast()
+          }   
+        }
+         
+
+        
+    }
+}
