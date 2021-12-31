@@ -1,0 +1,27 @@
+class Solution {
+    var result = [[Int]]()
+
+    func permute(_ nums: [Int]) -> [[Int]] {
+        
+        var path = nums
+        permuation(0, nums.count-1, &path)
+        
+       
+        return result
+    }
+
+    func permuation(_ index :Int, _ n : Int, _ path : inout [Int]){
+        if index == n{
+            result.append(path)
+            return
+        }else{
+           if index <= n{
+                for i in index...n{
+                path.swapAt(i, index)
+                permuation(index+1, n, &path)
+                path.swapAt(i, index)
+            }
+           }
+        }
+    }
+}
