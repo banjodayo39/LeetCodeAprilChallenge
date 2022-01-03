@@ -1,0 +1,20 @@
+class Solution {
+    func maxCoins(_ nums: [Int]) -> Int {
+        
+        var nums = [1] + nums + [1]
+        
+        var dp = Array(repeating: Array(repeating: 0, count: nums.count), count: nums.count)
+        
+        for l in stride(from: nums.count-2, to:0, by:-1){
+            for r in l...nums.count-2{
+                for i in l...r{
+                    let gain = nums[l-1] * nums[i] * nums[r+1]
+                    let rem = dp[l][i-1] + dp[i+1][r] 
+                    dp[l][r] = max(rem + gain, dp[l][r])
+                }
+            }
+        }
+        
+        return dp[1][nums.count-2]
+    }
+}
