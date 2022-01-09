@@ -1,0 +1,27 @@
+class Solution {
+    func minSwaps(_ data: [Int]) -> Int {
+        
+        var l = 0
+        var maxOneCount = 0
+        var currOneCount = 0
+        
+        let totalCount = data.reduce(0) { $0 + ($1 == 1 ? 1 : 0) }
+
+         for i in 0..<data.count{
+             
+             if data[i] == 1{
+                 currOneCount += 1
+             }
+             
+             if i-l >= totalCount{
+                 currOneCount -= (data[l] == 1 ? 1: 0)
+                 l += 1
+             }
+             
+             maxOneCount = max(currOneCount, maxOneCount)
+             
+         }
+        return totalCount - maxOneCount
+        
+    }
+}
