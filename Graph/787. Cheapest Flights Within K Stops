@@ -1,0 +1,26 @@
+   func findCheapestPrice(_ n: Int, _ flights: [[Int]], _ src: Int, _ dst: Int, _ k: Int) -> Int {
+        
+        var longMax = 10000000
+        var distances = Array(repeating: Array(repeating:longMax , count:n), count:2)
+        distances[0][src] = 0
+        distances[1][src] = 0
+        
+        for iter in 0..<k+1{
+            for edge in flights{
+                let s = edge[0] 
+                let d = edge[1]
+                let wUv = edge[2]
+                
+                let dU = distances[1-iter&1][s]
+                
+                let dV = distances[iter&1][d]
+                
+                if dU + wUv < dV{
+                    distances[iter&1][d] = dU + wUv
+                }
+            }
+        }
+        
+        return distances[k&1][dst] < longMax ? distances[k&1][dst] : -1
+    }
+}
