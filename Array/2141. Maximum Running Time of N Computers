@@ -1,0 +1,33 @@
+class Solution {
+    func maxRunTime(_ n: Int, _ batteries: [Int]) -> Int {
+        
+        let total = batteries.reduce(0, +)
+        
+        var ans = 0
+        var l = 0
+        var r = total/n
+        
+        while l <= r{
+            let mid = (l+r)/2
+            if canRunAll(mid, batteries, n){
+                ans = mid
+                l = mid+1
+            }else{
+                r = mid-1
+            }
+                         
+        }
+
+        return ans
+    }
+    
+    func canRunAll(_ maxTime: Int, _ batteries : [Int], _ n : Int) -> Bool{
+        var chargedRequired = maxTime * n
+        
+        for battery in batteries{
+            chargedRequired -= min(battery, maxTime)
+        }
+        
+        return chargedRequired <= 0
+    }
+}
