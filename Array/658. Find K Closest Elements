@@ -1,0 +1,57 @@
+class Solution {
+    func findClosestElements(_ arr: [Int], _ k: Int, _ x: Int) -> [Int] {
+        
+        var ans = [Int]()
+        
+        let pos = getClosestPosition(arr, x)
+        
+        if arr.count == k{
+            return arr
+        }
+        
+        var l = max(0, pos-k)
+        var r = min(pos+k, arr.count-1)
+                          // print("1 The pos", l, r)
+       while r - l + 1 > k{
+           let absL = abs(arr[l]-x)
+           let absR = abs(arr[r]-x)
+           
+           if absL <= absR {
+               r -= 1
+           }else{
+               l += 1
+           }
+       }
+        
+        return Array(arr[l...r])
+        
+    }
+    
+    func getClosestPosition(_ arr : [Int], _ x : Int) -> Int{
+        
+        var l = 0
+        var r = arr.count-1 
+        
+        if x <= arr[0]{
+            return l
+        }else if x >= arr[arr.count-1]{
+            return r
+        }
+        
+        while l <= r {
+            let mid = l + (r-l)/2
+            
+            if arr[mid]  == x{
+                return mid
+            }else if arr[mid] < x{
+                l = mid+1
+            }else{
+                r = mid-1
+            }
+            
+        }
+        
+        
+        return l
+    }
+}
