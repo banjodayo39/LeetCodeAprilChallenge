@@ -1,0 +1,52 @@
+class Solution {
+    
+    var dict = [Int: [Int]]()
+    
+    func verticalOrder(_ root: TreeNode?) -> [[Int]] {
+        
+        guard let root = root else{
+            return []
+        }
+        
+        var queue = [(root, 0)]
+        var maxCol = -100
+        var minCol = 100
+      
+        while !queue.isEmpty{
+            
+            let size = queue.count
+            
+            for node in 0..<size{
+                let (node, position) = queue.removeFirst()
+                                
+                if dict[position] == nil{
+                    dict[position] = []
+                }
+                
+                dict[position]?.append(node.val)
+                minCol = min(minCol, position)
+                maxCol = max(maxCol, position)
+                
+                if let left = node.left{
+                    queue.append((left, position-1))
+                }
+                
+                if let right = node.right{
+                    queue.append((right, position+1))
+                }
+            }
+            
+        }
+        
+        var result = [[Int]]()
+        
+        for i in minCol...maxCol{
+            result.append(dict[i]!)
+        }
+        
+        
+        return result
+        
+    }
+    
+}
