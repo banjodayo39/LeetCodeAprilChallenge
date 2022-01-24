@@ -1,0 +1,18 @@
+class Solution {
+    func findBuildings(_ heights: [Int]) -> [Int] {
+        
+        var oceanViewBuilding = [Int]()
+        var currMax = 0
+        
+        for i in stride(from: heights.count-1, to: -1, by: -1){
+            let currHeight = heights[i]
+            
+            if currHeight > currMax{
+                currMax = currHeight
+                oceanViewBuilding.append(i)
+            }
+        }
+        
+        return oceanViewBuilding.reversed()
+    }
+}
