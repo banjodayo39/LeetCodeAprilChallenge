@@ -38,3 +38,29 @@ class Solution {
         return isSameTree(node1?.left , node2?.left) && isSameTree(node1?.right, node2?.right)
     }
 }
+
+//java
+class Solution {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if(root == null) {
+            return false;
+        }
+        
+        return 
+            (root.val == subRoot.val ? ist(root, subRoot) : false) ||
+            isSubtree(root.left, subRoot) ||
+            isSubtree(root.right, subRoot);
+    }
+    
+    private boolean ist(TreeNode root1, TreeNode root2) {
+        if(root1 == null && root2 == null) {
+            return true;
+        }
+        
+        if(root1 == null || root2 == null) {
+            return false;
+        }
+        
+        return (root1.val == root2.val) && ist(root1.left, root2.left) && ist(root1.right, root2.right);
+    }
+}
