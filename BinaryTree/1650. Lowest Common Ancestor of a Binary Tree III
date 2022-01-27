@@ -1,33 +1,45 @@
 class Solution {
     func lowestCommonAncestor(_ p: Node?,_ q: Node?) -> Node? {
         
-        var pAncestors = Set<Int>()
-        var qAncestors = Set<Int>()
+        var parent = p
+        var parentSet = Set<Int>()
         
-        var currNode = p
-        
-        while currNode != nil{
-            pAncestors.insert(currNode!.val)
-            currNode = currNode?.parent
+        while parent != nil{
+            parentSet.insert(parent!.val)
+            parent = parent?.parent
         }
         
-        currNode = q
-        while currNode != nil{
-            qAncestors.insert(currNode!.val)
-            currNode = currNode?.parent
-        }
+        parent = q
         
-        qAncestors = qAncestors.intersection(pAncestors)
-        
-        currNode = q
-        
-        while currNode != nil{
-            if qAncestors.contains(currNode!.val){
-                return currNode
+        while parent != nil{
+            if parentSet.contains(parent!.val){
+                return parent
             }
-            currNode = currNode?.parent
+            parent = parent?.parent
         }
         
         return nil
+    }
+}
+
+class Solution {
+    func lowestCommonAncestor(_ p: Node?,_ q: Node?) -> Node? {
+        
+        var pNode = p
+        var qNode = q
+        
+        while pNode != qNode{
+            pNode = pNode?.parent ?? q
+            qNode = qNode?.parent ?? p
+        }
+        
+        return pNode
+    }
+}
+
+extension Node : Equatable{
+    
+    public static func ==(_ lhs: Node, _ rhs : Node) -> Bool{
+        return lhs.val == rhs.val
     }
 }
