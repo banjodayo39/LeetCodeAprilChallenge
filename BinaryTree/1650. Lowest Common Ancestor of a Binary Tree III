@@ -1,0 +1,33 @@
+class Solution {
+    func lowestCommonAncestor(_ p: Node?,_ q: Node?) -> Node? {
+        
+        var pAncestors = Set<Int>()
+        var qAncestors = Set<Int>()
+        
+        var currNode = p
+        
+        while currNode != nil{
+            pAncestors.insert(currNode!.val)
+            currNode = currNode?.parent
+        }
+        
+        currNode = q
+        while currNode != nil{
+            qAncestors.insert(currNode!.val)
+            currNode = currNode?.parent
+        }
+        
+        qAncestors = qAncestors.intersection(pAncestors)
+        
+        currNode = q
+        
+        while currNode != nil{
+            if qAncestors.contains(currNode!.val){
+                return currNode
+            }
+            currNode = currNode?.parent
+        }
+        
+        return nil
+    }
+}
