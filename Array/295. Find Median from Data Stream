@@ -53,3 +53,98 @@ class MedianFinder {
  * obj.addNum(num)
  * let ret_2: Double = obj.findMedian()
  */
+
+
+// Solution 2
+
+
+class MedianFinder {
+
+    var minHeap = Heap<Int>(<)
+    var maxHeap = Heap<Int>(>)
+    
+    init() {
+    }
+    
+    func addNum(_ num: Int) {
+        if maxHeap.data.isEmpty || maxHeap.peek >= num{
+            maxHeap.add(num)
+        }else{
+            minHeap.add(num)
+        }
+        
+        if maxHeap.data.count > minHeap.count+1{
+            minHeap.add(maxHeap.remove()!)
+        }else if maxHeap.count < minHeap.count{
+            maxHeap.add(minHeap.remove()!)
+        }
+    }
+    
+    func findMedian() -> Double {
+        if maxHeap.data.count == minHeap.data.count{
+            return Double(maxHeap.peek + minHeap.peek)/2.0
+        }else{
+            return Double(maxHeap.peek)
+        }
+    }
+    
+}
+
+class Heap<T> {
+    var compare: ((T, T)->Bool)
+    
+    var data: [T] = []
+    var count: Int {
+        return data.count
+    }
+    func p(_ i: Int) -> Int { return (i - 1) / 2 }
+    func l(_ i: Int) -> Int { return i * 2 + 1 }
+    func r(_ i: Int) -> Int { return i * 2 + 2 }
+    
+    init (_ compare: @escaping ((T, T)->Bool)) {
+        self.compare = compare
+    }
+    
+    func add(_ val: T) {
+        data.append(val)
+        swim(data.count - 1)
+    }
+    
+    func swim(_ i: Int) {
+        if compare(data[i], data[p(i)]) {
+            data.swapAt(p(i), i)
+            swim(p(i))
+        }
+    }
+    
+    func remove() -> T? {
+        if data.count == 0 { return nil }
+        if data.count == 1 { return data.removeLast() }
+        let node = data[0]
+        data[0] = data.removeLast()
+        dive(0)
+        return node
+    }
+    
+    func dive(_ i: Int) {
+        let leftVal = l(i) >= data.count ? data[i] : data[l(i)]
+        let rightVal = r(i) >= data.count ? data[i] : data[r(i)]
+        if compare(leftVal, data[i]) || compare(rightVal, data[i]) {
+            if compare(leftVal, rightVal) {
+                data.swapAt(i, l(i))
+                dive(l(i))
+            } else {
+                data.swapAt(i, r(i))
+                dive(r(i))
+            }
+        }
+    }
+    
+    var peek : T {
+        return data[0]
+    }
+
+}
+
+
+
