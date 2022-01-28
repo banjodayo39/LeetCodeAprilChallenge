@@ -1,0 +1,85 @@
+class Heap<T> {
+    var compare: ((T, T)->Bool)
+    
+    var data: [T] = []
+    var count: Int {
+        return data.count
+    }
+    func p(_ i: Int) -> Int { return (i - 1) / 2 }
+    func l(_ i: Int) -> Int { return i * 2 + 1 }
+    func r(_ i: Int) -> Int { return i * 2 + 2 }
+    
+    init (compare: @escaping ((T, T)->Bool)) {
+        self.compare = compare
+    }
+    
+    func add(_ val: T) {
+        data.append(val)
+        swim(data.count - 1)
+    }
+    
+    func swim(_ i: Int) {
+        if compare(data[i], data[p(i)]) {
+            data.swapAt(p(i), i)
+            swim(p(i))
+        }
+    }
+    
+    func remove() -> T? {
+        if data.count == 0 { return nil }
+        if data.count == 1 { return data.removeLast() }
+        let node = data[0]
+        data[0] = data.removeLast()
+        dive(0)
+        return node
+    }
+    
+    func dive(_ i: Int) {
+        let leftVal = l(i) >= data.count ? data[i] : data[l(i)]
+        let rightVal = r(i) >= data.count ? data[i] : data[r(i)]
+        if compare(leftVal, data[i]) || compare(rightVal, data[i]) {
+            if compare(leftVal, rightVal) {
+                data.swapAt(i, l(i))
+                dive(l(i))
+            } else {
+                data.swapAt(i, r(i))
+                dive(r(i))
+            }
+        }
+    }
+//    
+//    mutating func heapSort() {
+//        // Build Heap
+//        if !isEmpty {
+//            for i in stride(from: count / 2 - 1, through: 0, by: -1) {
+//                swim(i, upTo: count)
+//            }
+//        }
+//        
+//        // Perform Heap Sort.
+//        for index in indices.reversed() {
+//            swapAt(0, index)
+//            swim(0, upTo: index)
+//        }
+//    }
+}
+
+print("Started")
+var h = Heap<[Int]>(compare: { $0[0] < $1[0]} )
+h.add([3, 4])
+h.add([4, 4])
+print("The heap", h.data)
+h.add([2, 4])
+h.add([1, 2])
+h.add([10, 4])
+h.add([16, 5])
+
+print(h.data)
+print(h.remove())
+print(h.data)
+print(h.remove())
+
+
+print("Ednnging")
+
+
