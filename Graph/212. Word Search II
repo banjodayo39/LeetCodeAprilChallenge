@@ -1,0 +1,75 @@
+class TrieNode{
+    
+    var children = [Character : TrieNode]()
+    var isEnd = false
+    var word = ""
+    
+    func addWord(_ word : String){
+        var curr = self
+        
+        for char in word {
+            if curr.children[char] == nil{
+                curr.children[char] = TrieNode()
+            }
+            curr = curr.children[char]!
+        }
+        curr.isEnd = true
+        curr.word = word
+    }
+}
+
+class Solution {
+    
+    var board = [[Character]]()
+    var visited = Set<[Int]>()
+    var result = [String]()
+    var copyResult = Set<String>()
+    
+    
+    func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
+        
+        self.board = board
+        
+        var tries : TrieNode? = TrieNode()
+        
+        for word in words{
+            tries?.addWord(word)
+        }
+        
+        for row in 0..<board.count{
+            for col in 0..<board[0].count{
+                var word = ""
+                backTrack(row, col, &tries, &word)
+            }
+        }
+        
+        return Array(copyResult) 
+    }
+    
+    func backTrack(_ row : Int, _ col : Int, _ node : inout TrieNode?, _ word : inout String){
+        if row < 0 || col < 0 || row >= board.count || col >= board[0].count  || node?.children[board[row][col]] == nil{
+            return 
+        }
+        
+        let letter = board[row][col]
+        var newNode = node?.children[letter]!
+        board[row][col] = "*"
+        
+        if newNode != nil && newNode!.isEnd && newNode!.word != ""{
+            copyResult.insert(newNode!.word)
+            newNode?.word  = ""
+        }
+        
+        for cord in [[0, 1], [1,0], [0, -1], [-1, 0]]{
+            backTrack(row + cord[0], col + cord[1], &newNode, &word)
+        }
+        
+        board[row][col] = letter
+        
+        if newNode!.children.isEmpty{
+            //pruning the tree
+            node?.children.removeValue(forKey: letter)
+        }
+                
+    }
+}
