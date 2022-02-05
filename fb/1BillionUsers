@@ -1,0 +1,61 @@
+struct GrowthRates {
+  let rates: [Double]
+}
+
+private extension GrowthRates {
+  func daysUntilBillionUsers() -> Int {
+    // Write your code here
+    var i = 1
+    
+    var users = sumDay(self.rates, i)
+    print("The first user ", self.rates,  users)
+    if users >= 1000000000{
+      return 1
+    }
+    
+    while users < 1000000000{
+      i *= 2
+      users = sumDay(self.rates, i)
+    }
+    
+    print("The second users", users)
+    return search(self.rates, i/2, i)
+
+  }
+  
+  func search(_ arr : [Double], _ l: Int, _ h : Int) -> Int{
+    
+    var low = l
+    var high = h
+    
+    while low < high{
+      let mid = low + (high-low)/2
+      
+      if sumDay(arr, mid) < 1000000000{
+        low = mid + 1
+      }else{
+        high = mid
+      }
+    }
+    
+    return high
+  }
+  
+  func sumDay(_ arr: [Double], _ t : Int) -> Int{
+    var running = 0
+    
+    for ele in arr{
+      running +=  Int(pow(ele, Double(t)))
+    }
+    return running
+  }
+}
+/*
+[1.1, 1.2, 1.3]
+[1.5]
+[1.01, 1.02]
+*/
+
+let gRates = GrowthRates(rates : [1.01, 1.02])
+
+print(gRates.daysUntilBillionUsers())
