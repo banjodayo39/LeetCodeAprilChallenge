@@ -1,0 +1,25 @@
+class Solution {
+    TreeNode ans = null;
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    dfs (root, p, q);
+    return ans;
+}
+
+public boolean dfs(TreeNode root, TreeNode p, TreeNode q) {
+    if (root == null) return false;    // base
+    
+    boolean left = dfs(root.left, p, q);         // postorder left
+    boolean right = dfs(root.right, p, q);       // right
+    
+    boolean flag = false;
+    
+    if (root.val == p.val || root.val == q.val) {  // root is q or p
+        if (left || right) ans = root;                            
+        flag = true;
+    }
+    
+    if (left && right) ans = root;   // both leftSide and rightSide exits
+    
+    return flag || left || right;
+}
+}
