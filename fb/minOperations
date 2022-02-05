@@ -1,0 +1,45 @@
+extension String {
+    func subString(_ from: Int, _ to: Int) -> String {
+        if to == 0 || to > self.count{
+            return ""
+        }
+       let startIndex = self.index(self.startIndex, offsetBy: from)
+       let endIndex = self.index(self.startIndex, offsetBy: to)
+       return String(self[startIndex..<endIndex])
+    }
+}
+
+func minOperations(_ arr : [Int]) -> Int{
+   let target = arr.sorted().map{String($0)}.joined()
+   var currVal = arr.map{String($0)}.joined()
+
+   var queue = [(0, currVal)]
+   var visited : Set<String> = [currVal]
+    
+   while !queue.isEmpty{
+       
+      let (level, value) = queue.removeFirst()
+      
+       if value == target{
+           return level
+       }
+      
+      for  i in 0..<value.count{
+          for j in i..<value.count{
+              let permutation = value.subString(0, i) + String(value.subString(i, j+1).reversed()) + value.subString(j+1, value.count)
+              //print(permutation)
+              
+              if !visited.contains(permutation){
+                  visited.insert(permutation)
+                  queue.append((level+1, permutation))
+              }
+          }
+      }
+   }
+    
+    return -1
+}
+
+var arr = [1,2,3, 1]
+
+print(minOperations(arr))
