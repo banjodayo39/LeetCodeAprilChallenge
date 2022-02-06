@@ -6,4 +6,12 @@ extension String{
     func charAt(_ index: Int) -> Character {
         return self[self.index(self.startIndex, offsetBy: index)]
     }
+    
+    func  subString(_ from : Int, _ to: Int) -> String {
+        let start = self.index(self.startIndex, offsetBy: from)
+        let end = self.index(self.startIndex, offsetBy: to)
+        let subString = self[start..<end]
+        return String(subString)
+    }
+
 }
