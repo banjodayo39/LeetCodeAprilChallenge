@@ -1,0 +1,22 @@
+private extension Array where Element == Int {
+  var hasBalancedSplit: Bool {
+    // Write your code here
+    var total = self.reduce(0, +)
+    var arr = self.sorted()
+    
+    var left = 0
+    var right = 0
+    
+    var i = 0, j = arr.count-1
+    
+    while i <= j{
+      right += arr[j]
+      j -= 1
+      while i <= j && left < right{
+        left += arr[i]
+        i += 1
+      }
+    }
+      return left == right && arr[i-1] < arr[j+1]
+  }
+}
