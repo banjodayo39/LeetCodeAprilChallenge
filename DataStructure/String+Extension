@@ -1,0 +1,9 @@
+extension String{
+    mutating func replaceBy(_ offset: Int, _  with: String){
+        let index = self.index(self.startIndex, offsetBy: offset)
+        self.replaceSubrange(index...index, with: with)
+    }
+    func charAt(_ index: Int) -> Character {
+        return self[self.index(self.startIndex, offsetBy: index)]
+    }
+}
