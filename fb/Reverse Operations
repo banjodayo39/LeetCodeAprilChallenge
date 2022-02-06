@@ -1,0 +1,52 @@
+
+// Add any helper functions you may need here
+
+
+class Node {
+  var data: Int
+  var nextNode: Node?
+    
+  init(data: Int, next: Node? = nil) {
+    self.data = data
+    self.nextNode = next
+  }
+}
+
+
+private extension Node {
+  func reverse() -> Node {
+    // Write your code here
+    var dummyNode : Node? = Node(data : -1)
+    
+    var prevNode : Node? = dummyNode
+    var currNode : Node? = self
+    
+    while currNode != nil{
+        if currNode!.data % 2 == 0{
+          
+          prevNode?.nextNode =  reverseNode(&currNode)
+        }
+        prevNode = currNode
+        currNode = currNode?.nextNode
+    }
+    return dummyNode?.nextNode ?? self
+
+  }
+  
+  func reverseNode(_ node: inout Node?) -> Node?{
+
+   var currNode : Node? = node
+   var prev : Node? = nil
+    
+   while currNode != nil && currNode!.data % 2 == 0{
+       let nextNode = currNode?.nextNode
+        currNode?.nextNode = prev
+        prev = currNode
+        currNode = nextNode
+   }
+    
+    node?.nextNode = currNode
+    return prev 
+    
+  }
+}
