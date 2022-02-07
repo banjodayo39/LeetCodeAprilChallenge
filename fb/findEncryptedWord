@@ -1,0 +1,30 @@
+
+func findEncryptedWord(s: String) -> String {
+  // Write your code here
+  var s = s
+  var result = ""
+  
+  var mid = 0
+  mid = s.count / 2
+  
+  if s.count % 2 == 0{
+    mid -= 1
+  }
+  
+  result = result + s.substring(mid, mid+1)
+  
+  if mid > 0{
+    let ls = s.substring(0, mid)
+    result += findEncryptedWord(s: ls)
+  }
+  
+  if mid < s.count - 1{
+    
+    let rs  = s.substring(mid+1, s.count)
+    result += findEncryptedWord(s: rs)
+  }
+  
+  
+  return result
+
+}
