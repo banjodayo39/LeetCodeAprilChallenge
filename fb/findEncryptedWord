@@ -1,0 +1,41 @@
+import Foundation
+// Add any extra import statements you may need here
+
+
+class Node {
+  let data: Int
+  let left: Node?
+  let right: Node?
+    
+  init(_ data: Int, left: Node? = nil, right: Node? = nil) {
+    self.data = data
+    self.left = left
+    self.right = right
+  }
+}
+
+private extension Node {
+  
+   
+  // Add any helper functions you may need here
+   
+  func dfs(_ node : Node?, _ level : Int, _ maxCount: inout Int){
+       guard let node = node else{
+         return 
+       }
+       maxCount = max(level, maxCount)
+       dfs(node.left, level+1, &maxCount)
+       dfs(node.right, level+1, &maxCount)
+       
+  }
+
+  var visibleNodes: Int {
+    // Write your code here
+    var maxCount = 0
+    
+    dfs(self, 1, &maxCount)
+    
+    return maxCount
+
+  }
+}
