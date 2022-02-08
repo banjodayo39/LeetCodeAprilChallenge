@@ -1,0 +1,40 @@
+struct RotationalCipher {
+  let backing: String
+
+  func cipher(withRotationFactor: Int) -> String {
+    // Write your code here
+    
+    var charMap = [String: Int]()
+    var numberMap = [Int: String]()
+    var result = ""
+    var rotation = withRotationFactor
+    
+    for (i, c) in "abcdefghijklmnopqrstuvwxyz".enumerated(){
+       charMap[String(c)] = i 
+       numberMap[i] = String(c)
+    }
+    
+    for char in backing{
+      if char.isLetter{
+        var index = (charMap[char.lowercased()]! + rotation) 
+        if index > 25{
+          index %= 26
+        }
+        let ciperChar = char.isUppercase ? numberMap[index]!.uppercased() : numberMap[index]!
+        result.append(ciperChar)
+      } else if char.isNumber{
+         var cipherNum = (Int(String(char)) ?? 0) + rotation
+        if cipherNum > 9{
+          cipherNum %= 10
+        }
+        result.append(String(cipherNum))
+      }else{
+        result.append(char)
+      }
+      
+      
+    }
+    
+    return result
+
+  }
