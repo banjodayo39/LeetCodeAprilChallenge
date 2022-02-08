@@ -1,0 +1,40 @@
+class Solution {
+    func isOneEditDistance(_ s: String, _ t: String) -> Bool {
+        
+        if s.isEmpty && t.isEmpty || s == t{
+            return false
+        }
+        if abs(s.count-t.count) > 1{
+            return false
+        }
+        
+        if s.count < t.count{
+            return isOneEditDistance(t, s)
+        } 
+        
+        for i in 0..<t.count{
+            if  s.charAt(i)  != t.charAt(i){
+                if s.count == t.count{
+                    return s.substring(i+1, s.count) == t.substring(i+1, t.count)
+                }
+                return s.substring(i+1, s.count) == t.substring(i, t.count)
+            }
+        }
+        
+        return s != t
+    }
+}
+
+extension String{
+    
+    func charAt(_ position : Int) -> Character{
+        return self[self.index(self.startIndex, offsetBy: position)]
+    }
+    
+    func substring(_ from : Int, _ to: Int) -> String{
+        let start = self.index(self.startIndex, offsetBy: from)
+        let end = self.index(self.startIndex, offsetBy: to)
+        
+        return String(self[start..<end])
+    }
+}
