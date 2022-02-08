@@ -1,0 +1,54 @@
+
+func matchingPairs(s: String, t: String) -> Int {
+  // Write your code here
+  var misMatchSet = Set<String>()
+  
+  var i = 0
+  var n = s.count
+  var matching = 0
+  
+  while i < n{
+    let charS = s.charAt(i)
+    let charT = t.charAt(i)
+    if  charS == charT{
+      matching += 1
+    }else{
+      misMatchSet.insert("\(charS)\(charT)")
+    }
+     i += 1
+  }
+  
+  for ele in misMatchSet{
+    let reverse = String(ele.reversed())
+    if misMatchSet.contains(reverse){
+      return matching + 2
+    }
+  }
+  
+  if misMatchSet.count <= 1 {
+    matching -= 1
+  }
+  
+  if misMatchSet.count == 0{
+    matching -= 1
+  }
+  
+  //return  ?  matching-1 : matching
+  
+  
+  return matching
+    
+}
+
+extension String{
+    
+  func charAt(_ position : Int) -> Character{
+       return self[self.index(self.startIndex, offsetBy: position)]
+  }
+
+}
+
+
+
+
+
