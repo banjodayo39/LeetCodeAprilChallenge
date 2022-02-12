@@ -1,0 +1,71 @@
+class Solution {
+  /*
+  Runtime: 11 ms, faster than 6.93% of Swift online submissions for Word Break II.
+  */
+
+    var graph = [Int: [Int]]()
+    var result = [String]()
+    var visiting = Set<Int>()
+    var s : String!
+    
+    func wordBreak(_ s: String, _ wordDict: [String]) -> [String] {
+        self.s = s
+        var wordSet = Set(wordDict)
+        
+         for i in 0..<s.count{
+             var curr = ""
+             
+             for j in i..<s.count{
+                 curr.append(s.charAt(j))
+                 
+                 if wordSet.contains(curr){
+                     if graph[i] == nil{
+                         graph[i] = [j+1]
+                     }else{
+                         graph[i]?.append(j+1)
+                     }
+                 }
+             }
+         }
+         print(graph)
+        dfs("", -1, 0)
+        
+        return result
+         
+    }
+    
+    func dfs(_ word: String, _ st : Int, _ end: Int ){
+        if visiting.contains(end) || end > s.count{
+            return 
+        }
+        
+        visiting.insert(st)
+        
+        let newWord = st != -1 ? (word + (word.isEmpty ? "" : " ") + s.substring(st, end)) : ""
+        
+        if end == s.count{
+            result.append(newWord)
+        }
+                //print(newWord, end)
+        
+        for index in graph[end] ?? []{
+            dfs(newWord, end, index)
+        }
+        
+        visiting.remove(st)
+    }
+}
+
+
+extension String{
+    
+    func charAt(_ position: Int) -> Character{
+        return self[self.index(self.startIndex, offsetBy: position)]
+    }
+    
+    func substring(_ from : Int , _ to: Int) -> String{
+        let start = self.index(self.startIndex, offsetBy: from)
+        let end = self.index(self.startIndex, offsetBy: to)
+        return String(self[start..<end])
+    }
+}
