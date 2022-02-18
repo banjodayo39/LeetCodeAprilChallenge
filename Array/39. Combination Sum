@@ -1,0 +1,26 @@
+class Solution {
+    
+    var result = [[Int]]()
+    
+    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        var dp = [[[Int]]](repeating: [[Int]](), count:target+1)
+        dp[0].append([Int]())
+        
+        for candidate in candidates{
+            if candidate > target{
+                continue
+            }
+            for j in candidate...target{
+                for comb in dp[j-candidate]{
+                    var newComb = comb
+                    newComb.append(candidate)
+                    dp[j].append(newComb)
+                }
+            }
+        }
+        
+        
+        return dp[target]
+        
+    }
+}
