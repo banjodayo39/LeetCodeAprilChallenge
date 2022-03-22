@@ -1,0 +1,9 @@
+class Solution {
+    func isRectangleOverlap(_ rec1: [Int], _ rec2: [Int]) -> Bool {
+        if max(rec1[0], rec1[2]) <= min(rec2[0], rec2[2]) ||  max(rec1[3], rec1[1]) <= min(rec2[3], rec2[1]) ||  max(rec2[0], rec2[2]) <= min(rec1[0], rec1[2]) ||  max(rec2[3], rec2[1]) <= min(rec1[3], rec1[1]){
+            return false
+        }
+        
+        return true 
+    }
+}
