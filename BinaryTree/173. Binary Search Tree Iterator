@@ -1,0 +1,62 @@
+class BSTIterator {
+  
+    var arr = [Int]()
+    var pointer = 0
+
+    init(_ root: TreeNode?) {
+        dfs(root)
+    }
+    
+    func next() -> Int {
+        let currVal = arr[pointer]
+        pointer += 1
+        return currVal
+    }
+    
+    func hasNext() -> Bool {
+        return  pointer < arr.count
+    }
+    
+    func dfs(_ node : TreeNode?){
+        guard let node = node else{
+            return
+        }
+        
+        dfs(node.left)
+        arr.append(node.val)
+        dfs(node.right)
+    }
+}
+
+
+/* Solution with O(h) **/
+class BSTIterator {
+  
+    var stack = [TreeNode]()
+
+    init(_ root: TreeNode?) {
+        var curr = root
+        
+        while curr != nil{
+            stack.append(curr!)
+            curr = curr?.left
+        }
+    }
+    
+    func next() -> Int {
+        let currVal = stack.popLast()!
+        if let right = currVal.right{
+               var curr : TreeNode? = right
+               while curr != nil{
+                   stack.append(curr!)
+                   curr = curr?.left
+               }
+        }
+        return currVal.val
+    }
+    
+    func hasNext() -> Bool {
+        return !stack.isEmpty
+    }
+
+}
