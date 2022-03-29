@@ -1,0 +1,56 @@
+class Solution {
+    func search(_ nums: [Int], _ target: Int) -> Bool {
+        
+        var start = 0
+        var end = nums.count - 1
+        
+        while start <= end{
+            let mid = start + (end-start)/2
+            
+            if nums[mid] == target{
+                return true
+            }
+            
+            if !isBinarySearchHelpful(nums, start, nums[mid]){
+                start += 1
+                continue
+            }
+            
+            let pivotArray = existInFirst(nums, start, nums[mid])
+            
+            let targetArray = existInFirst(nums, start, target)
+            if (pivotArray ^ targetArray) { 
+                // If pivot and target exist in different sorted arrays, recall that xor is true when both operands are distinct
+                if (pivotArray) {
+                    start = mid + 1; // pivot in the first, target in the second
+                } else {
+                    end = mid - 1;
+                    // target in the first, pivot in the second
+                }
+            } else { // If pivot and target exist in same sorted array
+                if (nums[mid] < target) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            }
+            
+        }
+        
+        return false
+    }
+    
+    func isBinarySearchHelpful(_ nums: [Int], _ st : Int, _ target: Int) -> Bool{
+        return nums[st] != target
+    }
+    
+    func existInFirst(_ nums: [Int], _ st : Int, _ element : Int) -> Bool{
+        return nums[st] <= element
+    }
+}
+
+extension Bool {
+    static func ^ (left: Bool, right: Bool) -> Bool {
+        return left != right
+    }
+}
