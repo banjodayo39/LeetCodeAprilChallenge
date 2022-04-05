@@ -1,0 +1,27 @@
+
+class WordDistance {
+    
+    var distanceMap = [String: [Int]]()
+
+    init(_ wordsDict: [String]) {
+        for (i, w) in wordsDict.enumerated(){
+            if distanceMap[w] == nil{
+                distanceMap[w] = []
+            }
+            distanceMap[w]?.append(i)
+        }
+    }
+    
+    func shortest(_ word1: String, _ word2: String) -> Int {
+        var shortest = Int.max
+        
+
+        for i in distanceMap[word1] ?? []{
+            for j in distanceMap[word2] ?? []{
+                shortest = min(shortest, abs(i-j))
+            }
+        }
+        
+        return shortest
+    }
+}
