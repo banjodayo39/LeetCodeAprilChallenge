@@ -1,0 +1,137 @@
+class Person {
+   
+  var name : String 
+  
+  init(_ name : String) {
+    self.name = name
+    print("My name is \(name)")
+  }
+  
+  deinit{
+      print("Person has be deinitilazed")
+  }
+}
+
+var reference1: Person?         
+var reference2: Person?
+var reference3: Person?
+reference1 = Person(name: "John Appleseed") //print("My name is \(name)")
+reference2 = reference1
+reference3 = reference1
+reference1 = nil.      
+reference2 = nil
+reference3 = nil  //print("Person has be deinitilazed")
+
+============================================================
+Our team uses a large binary tree for storing data. We have noticed a concerning pattern in our binary tree where there can be multiple long "chains" of nodes, each link with only one child.
+
+Please return the count of chains of certain lengths.
+
+A chain is defined as a run of nodes each containing one child, where each such node is defined as a "chain link node". A chain ends when it reaches either a "normal node" (containing two children) or a "leaf node" (containing zero children).
+
+Example:
+
+Key:
+- n: "normal" node:       2 children
+- c: "chain link" node:   1 child
+- cN: chain link node that is also bottom of chain (N=chain count)
+- l: leaf node:           0 children
+- ^: lack of a node, i.e. a stub
+
+
+   Depth 1                  n
+                         /     \
+   Depth 2             c1       c
+                      /  ^     / ^
+   Depth 3          n         c
+                   / \       ^ \
+   Depth 4        c    c       c3
+                 / ^  / ^      / ^
+   Depth 5      c2   c2       n
+               / ^  ^ \      / \
+   Depth 6    l        n    l   n
+                      / \      / \
+   Depth 7           l   l    l   l
+
+
+       a
+      / \
+      c  b
+     /
+     d
+ acd is a chain of length 1. 
+
+
+# Result:
+chains:
+  length 1: 1 : 
+  length 2: 2 : 
+  length 3: 1
+
+dfs : 
+ left 
+right 
+ if leaf node : -1
+if node : has one :  1+ 
+ dict : [Int : Int]
+
+
+class Node {
+   var val: Int
+   var left : Node?
+   var right : Node?
+  
+   init(_ val : Int) {
+    self.val = val
+   }
+}
+
+
+func numberOfChain(_ root : Node) -> Int {
+     var dict = [Int: int]()
+      dfs(root, &dict)
+  return dict
+}
+
+
+func dfs(_ node: Node?, _ dict : inout  [Int : Int]) -> Int {
+      guard let node = node else {
+            return 0
+      }
+      let lChain = dfs(node.left, &dict)
+      let rChain = dfs(node.right, &dict)
+      
+ 
+  // 
+      if node.left != nil && node.right !=  nil || node.left == nil && node.right == nil {
+           if lChain != 0, let value = dict[lChain] {
+              dict[lChain] = value
+          } else if lChain != 0, {
+              dict[lChain] = 1
+          }
+        
+          if rChain != 0, let value = dict[rChain] {
+              dict[lChain] = value
+          } else if rChain != 0, {
+              dict[rChain] = 1
+          }
+           return 0
+      }
+  
+       var ans = 1
+        if lChain != 0, let value = dict[lChain] {
+          ans = 1 + value
+              dict[lChain] = 1 + value
+              
+          } else if lChain != 0, {
+              dict[lChain] = 1
+          }
+        
+          if rChain != 0, let value = dict[rChain] {
+            ans = 1 + value
+              dict[lChain] = 1 + value
+          } else if rChain != 0, {
+              dict[rChain] = 1
+          }
+      return ans
+}
