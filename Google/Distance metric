@@ -1,0 +1,5 @@
+
+// Your task is to write a function that given a distance d and a stream of floating point values received
+// one at a time, checks for groups of three values that are within at most d distance. As values are received
+// they should be stored in memory. Whenever any group is found meeting the distance criteria, return the
+// three values and remove them from memory.
